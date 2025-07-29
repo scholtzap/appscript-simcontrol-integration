@@ -1,8 +1,9 @@
 name: Deploy to Google Account 1
 
 on:
-  workflow_dispatch:
   push:
+    branches:
+      - main
     paths:
       - 'src/**'
 

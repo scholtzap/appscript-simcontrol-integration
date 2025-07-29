@@ -31,3 +31,9 @@
     SIMCONTROL_API_KEY      (yours)                Get it from the SimControl settings page
     LAST_PROCESSED_DATE     2025-01-01             ?
     RATE_LIMIT_HIT          false                  Flags if SimControl has notified of a rate limit.
+11. Do the initial commit to github
+12. Create the github secrets:
+    CLASPRC_ACCOUNT1	    Contents of .clasprc-account1.json
+    SCRIPT_ID_ACCOUNT1	    Script ID for Account 1's Apps Script
+    CLASPRC_ACCOUNT2	    Contents of .clasprc-account2.json
+    SCRIPT_ID_ACCOUNT2	    Script ID for Account 2's Apps Script
