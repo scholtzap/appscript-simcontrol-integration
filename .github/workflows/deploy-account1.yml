@@ -9,6 +9,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      CLASP_CONFIG_AUTH: ~/.clasprc.json
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -20,6 +22,7 @@ jobs:
 
       - name: Show Node & Shell Info
         run: |
+          set -e
           node -v
           npm -v
           echo "Shell: $SHELL"
@@ -30,13 +33,18 @@ jobs:
 
       - name: Confirm clasp install
         run: |
+          set -e
           which clasp
           clasp -v
 
       - name: Decode .clasprc.json (Base64 Secret)
         run: |
+          set -e
           mkdir -p ~/.config
           echo "${{ secrets.CLASPRC_ACCOUNT1_B64 }}" | base64 -d > ~/.clasprc.json
+
+      - name: Validate .clasprc.json
+        run: jq '.' ~/.clasprc.json
 
       - name: Show .clasprc.json Content (full)
         run: cat ~/.clasprc.json
@@ -46,6 +54,7 @@ jobs:
 
       - name: Confirm .clasprc.json Exists and Permissions
         run: |
+          set -e
           ls -la ~
           ls -la ~/.clasprc.json
           file ~/.clasprc.json
@@ -64,17 +73,22 @@ jobs:
       - name: Show clasp.json
         run: cat clasp.json
 
-      - name: Validate clasp.json
-        run: jq '.' clasp.json
+      - name: Check clasp project access
+        run: |
+          set -e
+          echo "Trying clasp list to test auth and project connection:"
+          (clasp list || echo "❌ clasp list failed (check auth/scriptId)") || true
 
       - name: Debug clasp auth config (show profile location)
         run: |
+          set -e
           echo "CLASP_CONFIG_AUTH=$CLASP_CONFIG_AUTH"
           env | grep CLASP
           echo "Trying clasp list to test auth..."
-          clasp list || echo "clasp list failed"
+          (clasp list || echo "❌ clasp list failed (invalid token/script ID)") || true
+
+      - name: Show clasp status
+        run: clasp status || echo "Status failed"
 
       - name: Deploy to Apps Script
         run: clasp push --force
-        env:
-          CLASP_CONFIG_AUTH: ~/.clasprc.json
