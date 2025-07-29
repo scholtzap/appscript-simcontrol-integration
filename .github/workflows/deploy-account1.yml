@@ -86,7 +86,7 @@ jobs:
         run: jq '.oauth2ClientSettings' ~/.clasprc.json
 
       - name: Upload .clasprc.json for inspection (optional)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: clasprc-debug
           path: ~/.clasprc.json
