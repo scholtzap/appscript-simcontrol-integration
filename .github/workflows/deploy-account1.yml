@@ -5,8 +5,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'src/**'
 
 jobs:
   deploy:
@@ -20,14 +18,41 @@ jobs:
         with:
           node-version: 18
 
+      - name: Show Node & Shell Info
+        run: |
+          node -v
+          npm -v
+          echo "Shell: $SHELL"
+          echo "Home: $HOME"
+
       - name: Install clasp
         run: npm install -g @google/clasp
 
-      - name: Decode .clasprc.json
+      - name: Confirm clasp install
         run: |
+          which clasp
+          clasp -v
+
+      - name: Decode .clasprc.json (Base64 Secret)
+        run: |
+          mkdir -p ~/.config
           echo "${{ secrets.CLASPRC_ACCOUNT1_B64 }}" | base64 -d > ~/.clasprc.json
-          cat ~/.clasprc.json
-          jq . ~/.clasprc.json  # debug: validate it's parseable
+
+      - name: Show .clasprc.json Content (full)
+        run: cat ~/.clasprc.json
+
+      - name: Show .clasprc.json Token Section
+        run: jq '.tokens.default' ~/.clasprc.json
+
+      - name: Confirm .clasprc.json Exists and Permissions
+        run: |
+          ls -la ~
+          ls -la ~/.clasprc.json
+          file ~/.clasprc.json
+          stat ~/.clasprc.json
+
+      - name: Print GitHub Working Directory Contents
+        run: ls -R .
 
       - name: Generate clasp.json
         run: |
@@ -35,13 +60,19 @@ jobs:
             "scriptId": "${{ secrets.SCRIPT_ID_ACCOUNT1 }}",
             "rootDir": "src"
           }' > clasp.json
-          cat clasp.json
 
-      - name: Debug clasp config
+      - name: Show clasp.json
+        run: cat clasp.json
+
+      - name: Validate clasp.json
+        run: jq '.' clasp.json
+
+      - name: Debug clasp auth config (show profile location)
         run: |
-          which clasp
-          ls -la ~/.clasprc.json
-          cat ~/.clasprc.json | jq '.tokens.default'
+          echo "CLASP_CONFIG_AUTH=$CLASP_CONFIG_AUTH"
+          env | grep CLASP
+          echo "Trying clasp list to test auth..."
+          clasp list || echo "clasp list failed"
 
       - name: Deploy to Apps Script
         run: clasp push --force
