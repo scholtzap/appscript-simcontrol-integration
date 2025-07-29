@@ -23,7 +23,7 @@ jobs:
 
       - name: Write .clasprc.json for Account 2
         run: |
-          echo "${{ secrets.CLASPRC_ACCOUNT2 }}" | jq '.' > ~/.clasprc.json
+          printf "%s" "${{ secrets.CLASPRC_ACCOUNT2 }}" > ~/.clasprc.json
 
       - name: Generate clasp.json (Account 2)
         run: |
