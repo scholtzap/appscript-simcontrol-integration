@@ -85,11 +85,14 @@ jobs:
       - name: Check oauth2ClientSettings in .clasprc.json
         run: jq '.oauth2ClientSettings' ~/.clasprc.json
 
+      - name: Copy .clasprc.json to working dir for upload
+        run: cp ~/.clasprc.json ./clasprc-debug.json
+
       - name: Upload .clasprc.json for inspection (optional)
         uses: actions/upload-artifact@v4
         with:
           name: clasprc-debug
-          path: ~/.clasprc.json
+          path: clasprc-debug.json
 
       - name: Base64 again for download
         run: |
