@@ -1,6 +1,7 @@
 name: Deploy to Google Account 2
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
