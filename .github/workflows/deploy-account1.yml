@@ -15,7 +15,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -23,20 +23,27 @@ jobs:
       - name: Install clasp
         run: npm install -g @google/clasp
 
-      - name: Write .clasprc.json for Account 1
-        shell: bash
+      - name: Decode .clasprc.json
         run: |
-          mkdir -p ~/.config
-          printf "%s" "${{ secrets.CLASPRC_ACCOUNT1 }}" > ~/.clasprc.json
+          echo "${{ secrets.CLASPRC_ACCOUNT1_B64 }}" | base64 -d > ~/.clasprc.json
+          cat ~/.clasprc.json
+          jq . ~/.clasprc.json  # debug: validate it's parseable
 
-      - name: Generate clasp.json for Account 1
+      - name: Generate clasp.json
         run: |
           echo '{
             "scriptId": "${{ secrets.SCRIPT_ID_ACCOUNT1 }}",
             "rootDir": "src"
           }' > clasp.json
+          cat clasp.json
 
-      - name: Deploy to Apps Script (Account 1)
+      - name: Debug clasp config
+        run: |
+          which clasp
+          ls -la ~/.clasprc.json
+          cat ~/.clasprc.json | jq '.tokens.default'
+
+      - name: Deploy to Apps Script
         run: clasp push --force
         env:
           CLASP_CONFIG_AUTH: ~/.clasprc.json
