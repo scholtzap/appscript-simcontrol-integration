@@ -5,8 +5,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'src/**'
 
 jobs:
   deploy:
@@ -24,7 +22,8 @@ jobs:
         run: npm install -g @google/clasp
 
       - name: Write .clasprc.json for Account 1
-        run: echo '${{ secrets.CLASPRC_ACCOUNT1 }}' > ~/.clasprc.json
+        run: |
+          echo "${{ secrets.CLASPRC_ACCOUNT1 }}" | jq '.' > ~/.clasprc.json
 
       - name: Generate clasp.json (Account 1)
         run: |
