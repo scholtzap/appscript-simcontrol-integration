@@ -73,6 +73,28 @@ jobs:
       - name: Show clasp.json
         run: cat clasp.json
 
+      - name: Show structure of .clasprc.json
+        run: jq 'keys' ~/.clasprc.json
+
+      - name: Show expiry date
+        run: jq '.tokens.default.expiry_date' ~/.clasprc.json
+
+      - name: Check token keys in .clasprc.json
+        run: jq '.tokens.default | keys' ~/.clasprc.json
+
+      - name: Check oauth2ClientSettings in .clasprc.json
+        run: jq '.oauth2ClientSettings' ~/.clasprc.json
+
+      - name: Upload .clasprc.json for inspection (optional)
+      uses: actions/upload-artifact@v3
+      with:
+        name: clasprc-debug
+        path: ~/.clasprc.json
+
+      - name: Base64 again for download
+        run: |
+          base64 ~/.clasprc.json
+
       - name: Check clasp project access
         run: |
           set -e
