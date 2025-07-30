@@ -27,16 +27,19 @@ jobs:
       - name: Decode .clasprc.json (from secret)
         run: |
           mkdir -p ~/.config
-          echo "${{ secrets.CLASPRC_ACCOUNT1 }}" | base64 -d > ~/.clasprc.json
+          echo "${{ secrets.CLASPRC_ACCOUNT1 }}" | base64 --decode > ~/.clasprc.json
 
       - name: Generate .clasp.json (required for clasp push)
         run: |
-          cat > .clasp.json <<EOF
-          {
-            "scriptId": "${{ secrets.SCRIPT_ID_ACCOUNT1 }}",
-            "rootDir": "src"
-          }
-          EOF
+          echo "{\"scriptId\":\"${{ secrets.SCRIPT_ID_ACCOUNT1 }}\",\"rootDir\":\"src\"}" > .clasp.json
+
+      - name: Confirm clasp is functional
+        run: |
+          clasp -v
+          clasp list || echo "⚠️ clasp list failed (check auth or script ID)"
+
+      - name: Deploy to Google Apps Script
+        run: clasp push --force
 
       - name: Upload .clasprc.json for optional inspection
         uses: actions/upload-artifact@v4
@@ -44,11 +47,3 @@ jobs:
           name: clasprc-debug
           path: ~/.clasprc.json
           if-no-files-found: ignore
-
-      - name: Confirm clasp is functional
-        run: |
-          clasp -v
-          clasp list || echo "clasp list failed (auth or scriptId issue)"
-
-      - name: Deploy to Google Apps Script
-        run: clasp push --force
