@@ -41,7 +41,7 @@ jobs:
         run: |
           set -e
           mkdir -p ~/.config
-          echo "${{ secrets.CLASPRC_ACCOUNT1_B64 }}" | base64 -d > ~/.clasprc.json
+          echo "${{ secrets.CLASPRC_ACCOUNT1 }}" | base64 -d > ~/.clasprc.json
 
       - name: Validate .clasprc.json
         run: jq '.' ~/.clasprc.json
@@ -117,3 +117,45 @@ jobs:
 
       - name: Deploy to Apps Script
         run: clasp push --force
+
+
+# name: Deploy Apps Script
+
+# on:
+#   push:
+#     branches:
+#       - main
+#   workflow_dispatch:
+
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
+
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: '20'   # Use Node.js 18+ (clasp v2 requires Node 10+)
+
+#       - name: Install project dependencies
+#         run: npm install        # or npm ci if you have a package-lock.json
+
+#       - name: Configure clasp credentials
+#         env:
+#           CLASPRC_JSON_BASE64: ${{ secrets.CLASPRC_JSON_BASE64 }}
+#         run: echo "$CLASPRC_JSON_BASE64" | base64 --decode > ~/.clasprc.json
+
+#       - name: Create .clasp.json config
+#         run: |
+#           cat > .clasp.json <<EOF
+#           {
+#             "scriptId": "${{ secrets.SCRIPT_ID }}",
+#             "rootDir": "src"
+#           }
+#           EOF
+
+#       - name: Deploy via clasp
+#         run: npx @google/clasp push -f
