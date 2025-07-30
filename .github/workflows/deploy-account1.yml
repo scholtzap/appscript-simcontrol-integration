@@ -29,12 +29,14 @@ jobs:
           mkdir -p ~/.config
           echo "${{ secrets.CLASPRC_ACCOUNT1 }}" | base64 -d > ~/.clasprc.json
 
-      - name: Generate clasp.json
+      - name: Generate .clasp.json (required for clasp push)
         run: |
-          echo '{
+          cat > .clasp.json <<EOF
+          {
             "scriptId": "${{ secrets.SCRIPT_ID_ACCOUNT1 }}",
             "rootDir": "src"
-          }' > clasp.json
+          }
+          EOF
 
       - name: Upload .clasprc.json for optional inspection
         uses: actions/upload-artifact@v4
