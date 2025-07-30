@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CLASP_CONFIG_AUTH: ~/.clasprc.json
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -20,48 +21,13 @@ jobs:
         with:
           node-version: 18
 
-      - name: Show Node & Shell Info
-        run: |
-          set -e
-          node -v
-          npm -v
-          echo "Shell: $SHELL"
-          echo "Home: $HOME"
-
       - name: Install clasp
         run: npm install -g @google/clasp
 
-      - name: Confirm clasp install
+      - name: Decode .clasprc.json (from secret)
         run: |
-          set -e
-          which clasp
-          clasp -v
-
-      - name: Decode .clasprc.json (Base64 Secret)
-        run: |
-          set -e
           mkdir -p ~/.config
           echo "${{ secrets.CLASPRC_ACCOUNT1 }}" | base64 -d > ~/.clasprc.json
-
-      - name: Validate .clasprc.json
-        run: jq '.' ~/.clasprc.json
-
-      - name: Show .clasprc.json Content (full)
-        run: cat ~/.clasprc.json
-
-      - name: Show .clasprc.json Token Section
-        run: jq '.tokens.default' ~/.clasprc.json
-
-      - name: Confirm .clasprc.json Exists and Permissions
-        run: |
-          set -e
-          ls -la ~
-          ls -la ~/.clasprc.json
-          file ~/.clasprc.json
-          stat ~/.clasprc.json
-
-      - name: Print GitHub Working Directory Contents
-        run: ls -R .
 
       - name: Generate clasp.json
         run: |
@@ -70,92 +36,17 @@ jobs:
             "rootDir": "src"
           }' > clasp.json
 
-      - name: Show clasp.json
-        run: cat clasp.json
-
-      - name: Show structure of .clasprc.json
-        run: jq 'keys' ~/.clasprc.json
-
-      - name: Show expiry date
-        run: jq '.tokens.default.expiry_date' ~/.clasprc.json
-
-      - name: Check token keys in .clasprc.json
-        run: jq '.tokens.default | keys' ~/.clasprc.json
-
-      - name: Check oauth2ClientSettings in .clasprc.json
-        run: jq '.oauth2ClientSettings' ~/.clasprc.json
-
-      - name: Copy .clasprc.json to working dir for upload
-        run: cp ~/.clasprc.json ./clasprc-debug.json
-
-      - name: Upload .clasprc.json for inspection (optional)
+      - name: Upload .clasprc.json for optional inspection
         uses: actions/upload-artifact@v4
         with:
           name: clasprc-debug
-          path: clasprc-debug.json
+          path: ~/.clasprc.json
+          if-no-files-found: ignore
 
-      - name: Base64 again for download
+      - name: Confirm clasp is functional
         run: |
-          base64 ~/.clasprc.json
+          clasp -v
+          clasp list || echo "clasp list failed (auth or scriptId issue)"
 
-      - name: Check clasp project access
-        run: |
-          set -e
-          echo "Trying clasp list to test auth and project connection:"
-          (clasp list || echo "❌ clasp list failed (check auth/scriptId)") || true
-
-      - name: Debug clasp auth config (show profile location)
-        run: |
-          set -e
-          echo "CLASP_CONFIG_AUTH=$CLASP_CONFIG_AUTH"
-          env | grep CLASP
-          echo "Trying clasp list to test auth..."
-          (clasp list || echo "❌ clasp list failed (invalid token/script ID)") || true
-
-      - name: Show clasp status
-        run: clasp status || echo "Status failed"
-
-      - name: Deploy to Apps Script
+      - name: Deploy to Google Apps Script
         run: clasp push --force
-
-
-# name: Deploy Apps Script
-
-# on:
-#   push:
-#     branches:
-#       - main
-#   workflow_dispatch:
-
-# jobs:
-#   deploy:
-#     runs-on: ubuntu-latest
-
-#     steps:
-#       - name: Checkout repository
-#         uses: actions/checkout@v4
-
-#       - name: Set up Node.js
-#         uses: actions/setup-node@v4
-#         with:
-#           node-version: '20'   # Use Node.js 18+ (clasp v2 requires Node 10+)
-
-#       - name: Install project dependencies
-#         run: npm install        # or npm ci if you have a package-lock.json
-
-#       - name: Configure clasp credentials
-#         env:
-#           CLASPRC_JSON_BASE64: ${{ secrets.CLASPRC_JSON_BASE64 }}
-#         run: echo "$CLASPRC_JSON_BASE64" | base64 --decode > ~/.clasprc.json
-
-#       - name: Create .clasp.json config
-#         run: |
-#           cat > .clasp.json <<EOF
-#           {
-#             "scriptId": "${{ secrets.SCRIPT_ID }}",
-#             "rootDir": "src"
-#           }
-#           EOF
-
-#       - name: Deploy via clasp
-#         run: npx @google/clasp push -f
