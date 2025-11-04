@@ -280,7 +280,31 @@ Expected format:
 
 **If Script ID is missing or incorrect**, update it now using the Script ID from Phase 0 audit.
 
-### 2.2 Deploy New Code via CLASP
+### 2.2 Enable Google Apps Script API (First Time Only)
+
+**IMPORTANT**: Before you can deploy via CLASP, you must enable the Google Apps Script API.
+
+**If this is your first time using CLASP**, follow these steps:
+
+1. **Visit the Apps Script settings page:**
+   ```
+   https://script.google.com/home/usersettings
+   ```
+
+2. **Toggle ON** the "Google Apps Script API" switch
+
+3. **Wait 1-2 minutes** for the change to propagate to Google's systems
+
+4. **Verify authentication:**
+   ```bash
+   clasp login
+   # Should open browser and complete authentication
+   # Confirms: "You are logged in as [your-email]"
+   ```
+
+**If you get an error** like "User has not enabled the Apps Script API", repeat steps 1-3 and wait a bit longer.
+
+### 2.3 Deploy New Code via CLASP
 
 **For each deployment**, deploy the new codebase:
 
@@ -828,6 +852,188 @@ Maintain a list of who to contact if issues arise:
 
 ---
 
+## 🔄 Phase 8: Setup GitHub Automation (Optional - Post-Deployment)
+
+**Duration**: 30-45 minutes
+**When**: After successful manual deployment and Phase 6 monitoring complete
+
+This phase sets up automated deployments via GitHub Actions for future code updates.
+
+### 8.1 Push Code to GitHub
+
+```bash
+# Verify you have a remote configured
+git remote -v
+
+# If no remote, add GitHub repository
+git remote add origin https://github.com/YOUR-USERNAME/appscript-simcontrol-integration.git
+
+# Push code and tags
+git push -u origin main --tags
+```
+
+### 8.2 Extract CLASP Credentials
+
+For each Google account that has script access:
+
+```bash
+# Your .clasprc.json is located at:
+# Linux/Mac: ~/.clasprc.json
+# Windows: C:\Users\USERNAME\.clasprc.json
+
+# View the file
+cat ~/.clasprc.json
+
+# Base64 encode for GitHub Secrets (Linux/Mac)
+cat ~/.clasprc.json | base64 -w 0
+
+# Base64 encode for GitHub Secrets (Windows PowerShell)
+[Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes((Get-Content ~/.clasprc.json -Raw)))
+```
+
+### 8.3 Configure GitHub Secrets
+
+In your GitHub repository:
+
+1. Go to **Settings** → **Secrets and variables** → **Actions**
+2. Click **New repository secret**
+3. Add the following secrets:
+
+| Secret Name | Value | Description |
+|-------------|-------|-------------|
+| `CLASPRC_WIFI_GATEWAY` | Base64-encoded .clasprc.json | Auth for wifi-gateway account |
+| `SCRIPT_ID_WIFI_GATEWAY` | `1rk7tz-RQA56oE-wOB7zE6DP4YkzIu39DirEPAnO17QgM-nyXt91413k6` | wifi-gateway Script ID |
+| `CLASPRC_ACCOUNT1` | Base64-encoded .clasprc.json | Auth for account1-airtime |
+| `SCRIPT_ID_ACCOUNT1` | `1JarEOjTvpbzm7zRTXC_0AbgT8BwHo7EiMbTwyXIVbji1-pjm6-876NYo` | account1-airtime Script ID |
+| `CLASPRC_ACCOUNT2` | Base64-encoded .clasprc.json | Auth for account2-data |
+| `SCRIPT_ID_ACCOUNT2` | `1IpH1MqDaA-tcuNyCRc8rTVGCVqdpMsHFNhPBnTJSft6PjvHZjriupcsF` | account2-data Script ID |
+
+**Note**: If multiple deployments use the same Google account, you can reuse the same CLASPRC secret.
+
+### 8.4 Create wifi-gateway Workflow
+
+Create `.github/workflows/deploy-wifi-gateway.yml`:
+
+```yaml
+name: Deploy to WiFi Gateway
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install clasp
+        run: npm install -g @google/clasp
+
+      - name: Write .clasprc.json
+        run: |
+          mkdir -p ~/.config
+          echo "${{ secrets.CLASPRC_WIFI_GATEWAY }}" | base64 --decode > ~/.clasprc.json
+
+      - name: Navigate to wifi-gateway deployment
+        run: cd deployments/wifi-gateway
+
+      - name: Deploy to Apps Script
+        run: |
+          cd deployments/wifi-gateway
+          clasp push --force
+        env:
+          CLASP_CONFIG_AUTH: ~/.clasprc.json
+```
+
+### 8.5 Update Existing Workflows
+
+The existing workflows in `.github/workflows/deploy-account1.yml` and `deploy-account2.yml` need to be updated to use the deployment directories:
+
+**For account1-airtime:**
+```yaml
+- name: Deploy to Apps Script
+  run: |
+    cd deployments/account1-airtime
+    clasp push --force
+```
+
+**For account2-data:**
+```yaml
+- name: Deploy to Apps Script
+  run: |
+    cd deployments/account2-data
+    clasp push --force
+```
+
+### 8.6 Test Automated Deployment
+
+**Option 1: Manual trigger**
+1. Go to GitHub → Actions
+2. Select workflow
+3. Click "Run workflow" → "Run workflow"
+4. Monitor the run
+
+**Option 2: Push trigger**
+1. Make a small change to a file in `src/`
+2. Commit and push
+3. All workflows should trigger automatically
+4. Check Actions tab for results
+
+### 8.7 Monitor First Automated Deployment
+
+After the first automated deployment:
+
+- [ ] Check GitHub Actions logs for success
+- [ ] Open each Google Sheet and verify code updated
+- [ ] Check Apps Script editor for new deployment timestamp
+- [ ] Run test suite in each sheet
+- [ ] Verify no regressions
+
+### 8.8 Automation Best Practices
+
+**Going forward:**
+
+1. **Test locally first**: Always test changes in a dev sheet before pushing
+2. **Use branches**: Create feature branches, test, then merge to main
+3. **Tag releases**: Use semantic versioning (v2.0.0, v2.1.0, etc.)
+4. **Monitor deploys**: Check Actions tab after each push
+5. **Keep secrets secure**: Never commit .clasprc.json to git
+
+**Deployment workflow:**
+```bash
+# 1. Make changes
+git checkout -b feature/new-feature
+# ... make changes ...
+
+# 2. Test locally
+clasp push --force  # from appropriate deployment directory
+
+# 3. Commit and push
+git add .
+git commit -m "Add new feature"
+git push origin feature/new-feature
+
+# 4. Create PR and merge to main
+# GitHub Actions will automatically deploy to all sheets
+
+# 5. Tag the release
+git tag v2.1.0
+git push --tags
+```
+
+---
+
 ## 🎯 Success Criteria
 
 Deployment is considered successful when:
@@ -841,6 +1047,7 @@ Deployment is considered successful when:
 7. ✅ No critical errors in Debug Log
 8. ✅ Users can access and use new system
 9. ✅ Rollback procedures documented and tested
+10. ✅ (Optional) GitHub automation configured for future deployments
 
 ---
 

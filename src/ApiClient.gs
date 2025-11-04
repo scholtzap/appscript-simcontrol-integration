@@ -164,10 +164,13 @@ var SimControlAPI = (function() {
       }
 
       // Check if there's a next page
-      hasNextPage = meta.has_next_page === true || meta.hasNextPage === true;
+      // Note: SimControl API uses "has_next_page?" with a question mark
+      hasNextPage = meta['has_next_page?'] === true || meta.hasNextPage === true || meta.has_next_page === true;
 
       if (hasNextPage) {
         page++;
+      } else {
+        Logger.log('No more pages. Stopping pagination.');
       }
     }
 

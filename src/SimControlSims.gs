@@ -38,7 +38,7 @@ function getActiveSIMs() {
 
   try {
     var sims = SimControlAPI.callWithPagination('/sims', {
-      managed: 'active',
+      status: 'MANAGED',
       page_size: 100
     });
 
@@ -61,7 +61,7 @@ function getSuspendedSIMs() {
 
   try {
     var sims = SimControlAPI.callWithPagination('/sims', {
-      managed: 'suspended',
+      status: 'SUSPENDED',
       page_size: 100
     });
 

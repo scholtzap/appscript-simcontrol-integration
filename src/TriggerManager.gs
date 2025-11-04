@@ -8,7 +8,8 @@
 
 /**
  * Set up daily triggers for enabled integrations
- * Creates triggers for airtime (6 AM) and data (7 AM) if enabled in config
+ * Creates triggers for airtime, data, and SIM details based on config
+ * Default schedule: 1-2 AM for all daily operations
  */
 function setupDailyTriggers() {
   try {
@@ -20,28 +21,40 @@ function setupDailyTriggers() {
     // Delete existing daily triggers first to avoid duplicates
     deleteAllTriggers();
 
-    // Create airtime trigger if enabled
+    // Create airtime trigger if enabled (1 AM)
     if (config.integrations.airtime && config.integrations.airtime.enabled) {
       ScriptApp.newTrigger('fetchPreviousDayAirtime')
         .timeBased()
-        .atHour(6)
+        .atHour(1)
         .everyDays(1)
         .create();
 
-      triggersCreated.push('Airtime (6 AM daily)');
-      Logger.log('✅ Created daily trigger for airtime at 6 AM');
+      triggersCreated.push('Airtime (1 AM daily)');
+      Logger.log('✅ Created daily trigger for airtime at 1 AM');
     }
 
-    // Create data trigger if enabled
+    // Create data trigger if enabled (1 AM)
     if (config.integrations.data && config.integrations.data.enabled) {
       ScriptApp.newTrigger('fetchPreviousDayData')
         .timeBased()
-        .atHour(7)
+        .atHour(1)
         .everyDays(1)
         .create();
 
-      triggersCreated.push('Data (7 AM daily)');
-      Logger.log('✅ Created daily trigger for data at 7 AM');
+      triggersCreated.push('Data (1 AM daily)');
+      Logger.log('✅ Created daily trigger for data at 1 AM');
+    }
+
+    // Create SIM details trigger if enabled (1 AM)
+    if (config.integrations.simDetails && config.integrations.simDetails.enabled) {
+      ScriptApp.newTrigger('fetchAllSIMDetails')
+        .timeBased()
+        .atHour(1)
+        .everyDays(1)
+        .create();
+
+      triggersCreated.push('SIM Details (1 AM daily)');
+      Logger.log('✅ Created daily trigger for SIM details at 1 AM');
     }
 
     // Show user notification
@@ -50,7 +63,7 @@ function setupDailyTriggers() {
       SpreadsheetApp.getActiveSpreadsheet().toast(message, '✅ Triggers Set Up', 10);
       Logger.log('✅ Successfully set up ' + triggersCreated.length + ' daily trigger(s)');
     } else {
-      var warningMsg = 'No integrations enabled for daily triggers. Please enable airtime or data in configuration.';
+      var warningMsg = 'No integrations enabled for daily triggers.';
       SpreadsheetApp.getActiveSpreadsheet().toast(warningMsg, '⚠️ No Triggers Created', 10);
       Logger.log('⚠️ No daily triggers created - no integrations enabled');
     }

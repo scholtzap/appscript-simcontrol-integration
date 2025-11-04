@@ -5,27 +5,15 @@
     "LOG_SHEET_NAME": "[APP] Debug Log",
 
     "ENABLE_AIRTIME": "false",
-
-    "ENABLE_DATA": "true",
-    "DATA_SHEET_NAME": "[API] Data Usage",
-    "DATA_START_DATE": "2025-06-01",
-    "DATA_EXCLUDED_MSISDNS": "[]",
-
+    "ENABLE_DATA": "false",
     "ENABLE_RECHARGES": "false",
 
-    "ENABLE_PRODUCTS": "true",
-    "PRODUCTS_SHEET_NAME": "[API] Recharge Product IDs",
-    "PRODUCTS_NETWORK_IDS": "[10, 11]",
-    "PRODUCTS_TYPE": "DATA",
+    "ENABLE_PRODUCTS": "false",
 
     "ENABLE_SIM_DETAILS": "true",
     "SIM_DETAILS_SHEET_NAME": "[API] SimControl Data",
 
-    "ENABLE_ANALYTICS": "true",
-    "ANALYTICS_USAGE_AGE_ENABLED": "true",
-    "ANALYTICS_USAGE_AGE_SHEET": "[APP] Usage Age Analysis",
-    "ANALYTICS_HIGH_USAGE_ENABLED": "false",
-
+    "ENABLE_ANALYTICS": "false",
     "ENABLE_FOTAWEB": "false",
     "ENABLE_QRCODE": "false"
   }
