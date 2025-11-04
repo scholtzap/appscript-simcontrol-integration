@@ -1,0 +1,33 @@
+{
+  "scriptProperties": {
+    "SIMCONTROL_API_KEY": "account2-api-key",
+    "DEFAULT_START_DATE": "2025-01-01",
+    "LOG_SHEET_NAME": "[APP] Debug Log",
+
+    "ENABLE_AIRTIME": "false",
+
+    "ENABLE_DATA": "true",
+    "DATA_SHEET_NAME": "[API] Data Usage",
+    "DATA_START_DATE": "2025-08-26",
+    "DATA_EXCLUDED_MSISDNS": "[]",
+
+    "ENABLE_RECHARGES": "true",
+    "RECHARGE_SHEET_NAME": "[API] Recharges",
+
+    "ENABLE_PRODUCTS": "true",
+    "PRODUCTS_SHEET_NAME": "[API] Recharge Product IDs",
+    "PRODUCTS_NETWORK_IDS": "[10, 11]",
+    "PRODUCTS_TYPE": "DATA",
+
+    "ENABLE_SIM_DETAILS": "false",
+
+    "ENABLE_ANALYTICS": "true",
+    "ANALYTICS_USAGE_AGE_ENABLED": "false",
+    "ANALYTICS_HIGH_USAGE_ENABLED": "true",
+    "ANALYTICS_HIGH_USAGE_SHEET": "[APP] High Usage",
+    "ANALYTICS_HIGH_USAGE_THRESHOLD": "1500",
+
+    "ENABLE_FOTAWEB": "false",
+    "ENABLE_QRCODE": "false"
+  }
+}

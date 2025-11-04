@@ -1,0 +1,20 @@
+{
+  "scriptProperties": {
+    "SIMCONTROL_API_KEY": "account1-api-key",
+    "DEFAULT_START_DATE": "2025-01-01",
+    "LOG_SHEET_NAME": "[APP] Debug Log",
+
+    "ENABLE_AIRTIME": "true",
+    "AIRTIME_SHEET_NAME": "[API] Airtime Usage",
+    "AIRTIME_START_DATE": "2025-01-01",
+    "AIRTIME_EXCLUDED_MSISDNS": "[\"27123456789\"]",
+
+    "ENABLE_DATA": "false",
+    "ENABLE_RECHARGES": "false",
+    "ENABLE_PRODUCTS": "false",
+    "ENABLE_SIM_DETAILS": "false",
+    "ENABLE_ANALYTICS": "false",
+    "ENABLE_FOTAWEB": "false",
+    "ENABLE_QRCODE": "false"
+  }
+}

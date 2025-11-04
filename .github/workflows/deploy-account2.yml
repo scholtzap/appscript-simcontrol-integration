@@ -1,0 +1,42 @@
+name: Deploy to Google Account 2
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install clasp
+        run: npm install -g @google/clasp
+
+      - name: Write .clasprc.json for Account 2
+        shell: bash
+        run: |
+          mkdir -p ~/.config
+          printf "%s" "${{ secrets.CLASPRC_ACCOUNT2 }}" > ~/.clasprc.json
+
+      - name: Generate clasp.json for Account 2
+        run: |
+          echo '{
+            "scriptId": "${{ secrets.SCRIPT_ID_ACCOUNT2 }}",
+            "rootDir": "src"
+          }' > clasp.json
+
+      - name: Deploy to Apps Script (Account 2)
+        run: clasp push --force
+        env:
+          CLASP_CONFIG_AUTH: ~/.clasprc.json

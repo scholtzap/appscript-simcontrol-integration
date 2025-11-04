@@ -1,0 +1,53 @@
+# Version control
+.git/
+.gitignore
+.github/
+
+# Documentation
+*.md
+spec.md
+ROADMAP.md
+readme.md
+
+# Legacy code (archived, not deployed)
+originals/
+
+# Deployment configs
+deployments/
+.clasp.json
+.clasprc
+*.clasprc
+
+# Scripts
+scripts/
+
+# Node modules
+node_modules/
+package.json
+package-lock.json
+
+# Local development
+.env
+*.local
+.env.*
+.DS_Store
+
+# API documentation
+*-api-docs.json
+simcontrol-api-docs.json
+fotaweb-api-docs.json
+
+# Secrets
+secrets/
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+tmp/
+temp/
+*.tmp

@@ -1,0 +1,4038 @@
+{
+  "components": {
+    "responses": {},
+    "schemas": {
+      "Accepted": {
+        "properties": {
+          "message": {
+            "description": "Response message",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "title": "Accepted",
+        "type": "object",
+        "x-struct": "Elixir.SimcontrolWeb.OpenApi.CommonSchemas.Accepted",
+        "x-validate": null
+      },
+      "SIMsResponse": {
+        "description": "Response schema for multiple SIMs",
+        "example": {
+          "data": [
+            {
+              "airtime_balance": 50,
+              "apn_serving_network": "Serving Network",
+              "created": "2025-08-25T00:00:00Z",
+              "data_balance_in_mb": 20,
+              "description": "A SIM card",
+              "iccid": "89087000000005983680",
+              "id": 123,
+              "imei": "8908700000000598399",
+              "imei_locked": false,
+              "imsi": "655010870598368",
+              "ip_address": "192.168.0.0",
+              "last_balance_check": "2025-08-25T00:00:00Z",
+              "msisdn": "+27828989273",
+              "network_id": 52,
+              "network_status": "ACTIVE",
+              "roaming": true,
+              "sms_balance": 10,
+              "status": "MANAGED",
+              "suspended_at": null,
+              "tags": [
+                "Device SIM",
+                "Roaming SIM"
+              ]
+            },
+            {
+              "airtime_balance": 5,
+              "apn_serving_network": null,
+              "created": "2025-03-25T02:22:00Z",
+              "data_balance_in_mb": 2,
+              "description": "Another SIM card",
+              "iccid": "89087000000009983611",
+              "id": 125,
+              "imei": "8908700000000598400",
+              "imei_locked": true,
+              "imsi": "655010870898352",
+              "ip_address": null,
+              "last_balance_check": "2025-08-25T02:10:00Z",
+              "msisdn": "+27828989274",
+              "network_id": 32,
+              "network_status": "ACTIVE",
+              "roaming": false,
+              "sms_balance": 1,
+              "status": "MANAGED",
+              "suspended_at": null,
+              "tags": []
+            }
+          ],
+          "meta": {
+            "current_page": 1,
+            "has_next_page?": true,
+            "has_previous_page?": false,
+            "next_page": 2,
+            "page_size": 5
+          }
+        },
+        "properties": {
+          "data": {
+            "description": "List of SIMs",
+            "items": {
+              "$ref": "#/components/schemas/SIM"
+            },
+            "type": "array",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Metadata"
+          }
+        },
+        "title": "SIMsResponse",
+        "type": "object",
+        "x-struct": "Elixir.SimcontrolWeb.OpenApi.SimSchema.SIMsResponse",
+        "x-validate": null
+      },
+      "EndDate": {
+        "description": "End date of the schedule rule.\nWill be null if the schedule rule does not have an end date.\n",
+        "format": "date",
+        "title": "EndDate",
+        "type": "string",
+        "x-struct": null,
+        "x-validate": null
+      },
+      "BundleSize": {
+        "title": "BundleSize",
+        "type": "number",
+        "x-struct": null,
+        "x-validate": null
+      },
+      "ScheduleRule": {
+        "nullable": true,
+        "properties": {
+          "end_date": {
+            "description": "End date of the schedule rule.\nWill be null if the schedule rule does not have an end date.\n",
+            "format": "date",
+            "title": "EndDate",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "recurrences": {
+            "description": "iCalendar RRULE string defining the recurrence pattern.\nFormat: 'DTSTART;TZID=Etc/UTC:YYYYMMDDTHHMMSSZ\nRRULE:FREQ=[FREQ];[OPTIONS]'\n",
+            "title": "Recurrences",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "start_date": {
+            "description": "Start date of the schedule rule",
+            "format": "date",
+            "title": "StartDate",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "title": "ScheduleRule",
+        "type": "object",
+        "x-struct": null,
+        "x-validate": null
+      },
+      "SIMUpdateRequest": {
+        "example": {
+          "description": "Updated SIM Description"
+        },
+        "properties": {
+          "description": {
+            "description": "SIM Description",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "title": "SIMUpdateRequest",
+        "type": "object",
+        "x-struct": "Elixir.SimcontrolWeb.OpenApi.SimSchema.SIMUpdateRequest",
+        "x-validate": null
+      },
+      "RuleID": {
+        "title": "RuleID",
+        "type": "integer",
+        "x-struct": null,
+        "x-validate": null
+      },
+      "RechargeRequest": {
+        "description": "Request schema for a SIM recharge",
+        "example": {
+          "airtime_amount": "100.25",
+          "msisdn": "+27826787890",
+          "network_id": 1,
+          "reference": "RECHARGE123"
+        },
+        "properties": {
+          "airtime_amount": {
+            "description": "Airtime Amount",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "msisdn": {
+            "description": "SIM MSISDN",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "network_id": {
+            "description": "Network ID",
+            "type": "integer",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "product_id": {
+            "description": "Product ID",
+            "type": "integer",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "reference": {
+            "description": "Recharge Reference",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "msisdn",
+          "network_id"
+        ],
+        "title": "RechargeRequest",
+        "type": "object",
+        "x-struct": "Elixir.SimcontrolWeb.OpenApi.RechargeSchema.RechargeRequest",
+        "x-validate": null
+      },
+      "BadRequest": {
+        "properties": {
+          "error": {
+            "description": "Request error message",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "title": "BadRequest",
+        "type": "object",
+        "x-struct": "Elixir.SimcontrolWeb.OpenApi.CommonSchemas.BadRequest",
+        "x-validate": null
+      },
+      "TooManyRequests": {
+        "description": "API requests are rate limited please wait before trying again.",
+        "properties": {
+          "error": {
+            "description": "Error message",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "title": "TooManyRequests",
+        "type": "object",
+        "x-struct": "Elixir.SimcontrolWeb.OpenApi.CommonSchemas.TooManyRequests",
+        "x-validate": null
+      },
+      "Active": {
+        "title": "Active",
+        "type": "boolean",
+        "x-struct": null,
+        "x-validate": null
+      },
+      "NetworksResponse": {
+        "description": "Response schema for multiple Networks",
+        "example": {
+          "data": [
+            {
+              "id": 1,
+              "name": "Network 1"
+            },
+            {
+              "id": 2,
+              "name": "Network 2"
+            }
+          ],
+          "meta": {
+            "current_page": 1,
+            "has_next_page?": true,
+            "has_previous_page?": false,
+            "next_page": 2,
+            "page_size": 5
+          }
+        },
+        "properties": {
+          "data": {
+            "description": "List of Networks",
+            "items": {
+              "description": "A Network",
+              "properties": {
+                "id": {
+                  "title": "NetworkID",
+                  "type": "integer",
+                  "x-struct": null,
+                  "x-validate": null
+                },
+                "name": {
+                  "title": "NetworkName",
+                  "type": "string",
+                  "x-struct": null,
+                  "x-validate": null
+                }
+              },
+              "type": "object",
+              "x-struct": null,
+              "x-validate": null
+            },
+            "type": "array",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Metadata"
+          }
+        },
+        "title": "NetworksResponse",
+        "type": "object",
+        "x-struct": "Elixir.SimcontrolWeb.OpenApi.NetworkSchema.NetworksResponse",
+        "x-validate": null
+      },
+      "Recurrences": {
+        "description": "iCalendar RRULE string defining the recurrence pattern.\nFormat: 'DTSTART;TZID=Etc/UTC:YYYYMMDDTHHMMSSZ\nRRULE:FREQ=[FREQ];[OPTIONS]'\n",
+        "title": "Recurrences",
+        "type": "string",
+        "x-struct": null,
+        "x-validate": null
+      },
+      "OrganisationResponse": {
+        "description": "Response schema for an Organisation",
+        "example": {
+          "data": {
+            "balance": "10.0"
+          }
+        },
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/Organisation"
+          }
+        },
+        "title": "OrganisationResponse",
+        "type": "object",
+        "x-struct": "Elixir.SimcontrolWeb.OpenApi.OrganisationSchema.OrganisationResponse",
+        "x-validate": null
+      },
+      "SIMChangeNetworkRequest": {
+        "description": "Request schema for changing a SIM's network.\nOne SIM identifier (msisdn, iccid, or imsi) is required to locate the SIM.\n",
+        "oneOf": [
+          {
+            "example": {
+              "msisdn": "+27712345678",
+              "network_id": 12
+            },
+            "properties": {
+              "msisdn": {
+                "description": "The MSISDN of the SIM",
+                "type": "string",
+                "x-struct": null,
+                "x-validate": null
+              },
+              "network_id": {
+                "description": "Network ID to change to",
+                "type": "integer",
+                "x-struct": null,
+                "x-validate": null
+              }
+            },
+            "required": [
+              "msisdn",
+              "network_id"
+            ],
+            "title": "SIMChangeNetworkRequestMSISDN",
+            "type": "object",
+            "x-struct": null,
+            "x-validate": null
+          },
+          {
+            "example": {
+              "iccid": "89441234567890123456",
+              "network_id": 23410
+            },
+            "properties": {
+              "iccid": {
+                "description": "The ICCID of the SIM",
+                "type": "string",
+                "x-struct": null,
+                "x-validate": null
+              },
+              "network_id": {
+                "description": "Network ID to change to",
+                "type": "integer",
+                "x-struct": null,
+                "x-validate": null
+              }
+            },
+            "required": [
+              "iccid",
+              "network_id"
+            ],
+            "title": "SIMChangeNetworkRequestICCID",
+            "type": "object",
+            "x-struct": null,
+            "x-validate": null
+          },
+          {
+            "example": {
+              "imsi": "234567890123456",
+              "network_id": 23410
+            },
+            "properties": {
+              "imsi": {
+                "description": "The IMSI of the SIM",
+                "type": "string",
+                "x-struct": null,
+                "x-validate": null
+              },
+              "network_id": {
+                "description": "Network ID to change to",
+                "type": "integer",
+                "x-struct": null,
+                "x-validate": null
+              }
+            },
+            "required": [
+              "imsi",
+              "network_id"
+            ],
+            "title": "SIMChangeNetworkRequestIMSI",
+            "type": "object",
+            "x-struct": null,
+            "x-validate": null
+          }
+        ],
+        "title": "SIMChangeNetworkRequest",
+        "x-struct": "Elixir.SimcontrolWeb.OpenApi.SimSchema.SIMChangeNetworkRequest",
+        "x-validate": null
+      },
+      "SIMResponse": {
+        "description": "Response schema for a SIM",
+        "example": {
+          "data": {
+            "airtime_balance": 100,
+            "apn_serving_network": "Serving Network",
+            "created": "2025-08-25T00:00:00Z",
+            "data_balance_in_mb": 100,
+            "description": "A SIM card",
+            "iccid": "89087000000005983680",
+            "id": 123,
+            "imei": "8908700000000598399",
+            "imei_locked": false,
+            "imsi": "655010870598368",
+            "ip_address": "192.100.0.1",
+            "last_balance_check": "2025-08-25T00:00:00Z",
+            "msisdn": "+27828989273",
+            "network_id": 2,
+            "roaming": true,
+            "sms_balance": 100,
+            "status": "MANAGED",
+            "tags": [
+              "Device SIM",
+              "Roaming SIM"
+            ]
+          }
+        },
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/SIM"
+          }
+        },
+        "title": "SIMResponse",
+        "type": "object",
+        "x-struct": "Elixir.SimcontrolWeb.OpenApi.SimSchema.SIMResponse",
+        "x-validate": null
+      },
+      "Created": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "title": "Created",
+        "type": "object",
+        "x-struct": "Elixir.SimcontrolWeb.OpenApi.CommonSchemas.Created",
+        "x-validate": null
+      },
+      "SIMddRequestIMSI": {
+        "example": {
+          "imsi": "655013680776838",
+          "network_id": 4
+        },
+        "properties": {
+          "description": {
+            "description": "SIM Description",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "imsi": {
+            "description": "The IMSI of the SIM",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "network_id": {
+            "description": "Network ID",
+            "type": "integer",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "imsi",
+          "network_id"
+        ],
+        "title": "SIMddRequestIMSI",
+        "type": "object",
+        "x-struct": null,
+        "x-validate": null
+      },
+      "SIMChangeNetworkRequestICCID": {
+        "example": {
+          "iccid": "89441234567890123456",
+          "network_id": 23410
+        },
+        "properties": {
+          "iccid": {
+            "description": "The ICCID of the SIM",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "network_id": {
+            "description": "Network ID to change to",
+            "type": "integer",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "iccid",
+          "network_id"
+        ],
+        "title": "SIMChangeNetworkRequestICCID",
+        "type": "object",
+        "x-struct": null,
+        "x-validate": null
+      },
+      "ProductType": {
+        "enum": [
+          "AIRTIME",
+          "AIRTIME_BUNDLE",
+          "DATA",
+          "SMS",
+          "TOP_UP",
+          "VOICE_MINUTE_BUNDLE"
+        ],
+        "title": "ProductType",
+        "type": "string",
+        "x-struct": null,
+        "x-validate": null
+      },
+      "SIMddRequestICCID": {
+        "example": {
+          "iccid": "89087000000005983688",
+          "network_id": 3
+        },
+        "properties": {
+          "description": {
+            "description": "SIM Description",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "iccid": {
+            "description": "The ICCID of the SIM",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "network_id": {
+            "description": "Network ID",
+            "type": "integer",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "iccid",
+          "network_id"
+        ],
+        "title": "SIMddRequestICCID",
+        "type": "object",
+        "x-struct": null,
+        "x-validate": null
+      },
+      "BundleSizeInMB": {
+        "nullable": true,
+        "title": "BundleSizeInMB",
+        "type": "integer",
+        "x-struct": null,
+        "x-validate": null
+      },
+      "InsufficientFunds": {
+        "description": "Your Organisation has insufficient funds to complete this operation",
+        "title": "InsufficientFunds",
+        "x-struct": "Elixir.SimcontrolWeb.OpenApi.CommonSchemas.InsufficientFunds",
+        "x-validate": null
+      },
+      "Unit": {
+        "enum": [
+          "SMS",
+          "MB",
+          "GB",
+          "CURRENCY",
+          "MINUTES"
+        ],
+        "title": "Unit",
+        "type": "string",
+        "x-struct": null,
+        "x-validate": null
+      },
+      "Product": {
+        "description": "Response schema for a product",
+        "example": {
+          "bundle_size": 200,
+          "bundle_size_in_mb": 204800,
+          "days_valid": 30,
+          "id": 124,
+          "label": "Network-200GB-Bundle-30days",
+          "network_id": 12,
+          "price": 121.55,
+          "product_code": "MJMN",
+          "product_type": "DATA",
+          "unit": "GB"
+        },
+        "properties": {
+          "bundle_size": {
+            "title": "BundleSize",
+            "type": "number",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "bundle_size_in_mb": {
+            "nullable": true,
+            "title": "BundleSizeInMB",
+            "type": "integer",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "days_valid": {
+            "title": "DaysValid",
+            "type": "integer",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "id": {
+            "title": "ProductID",
+            "type": "integer",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "label": {
+            "title": "Label",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "network_id": {
+            "description": "ID of the Network the Product is for",
+            "title": "NetworkID",
+            "type": "integer",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "price": {
+            "title": "Price",
+            "type": "number",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "product_code": {
+            "title": "ProductCode",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "product_type": {
+            "enum": [
+              "AIRTIME",
+              "AIRTIME_BUNDLE",
+              "DATA",
+              "SMS",
+              "TOP_UP",
+              "VOICE_MINUTE_BUNDLE"
+            ],
+            "title": "ProductType",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "unit": {
+            "enum": [
+              "SMS",
+              "MB",
+              "GB",
+              "CURRENCY",
+              "MINUTES"
+            ],
+            "title": "Unit",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "title": "Product",
+        "type": "object",
+        "x-struct": "Elixir.SimcontrolWeb.OpenApi.ProductSchema.Product",
+        "x-validate": null
+      },
+      "NotFound": {
+        "description": "Item Not Found",
+        "title": "NotFound",
+        "x-struct": "Elixir.SimcontrolWeb.OpenApi.CommonSchemas.NotFound",
+        "x-validate": null
+      },
+      "ProductsResponse": {
+        "description": "Response schema for multiple Products",
+        "example": {
+          "data": [
+            {
+              "bundle_size": 200,
+              "bundle_size_in_mb": 204800,
+              "days_valid": 30,
+              "id": 124,
+              "label": "Network-200GB-Bundle-30days",
+              "network_id": 12,
+              "price": 121.55,
+              "product_code": "MJMN",
+              "product_type": "DATA",
+              "unit": "GB"
+            },
+            {
+              "bundle_size": 500,
+              "bundle_size_in_mb": null,
+              "days_valid": 30,
+              "id": 125,
+              "label": "OtherNetwork-500-SMS-Bundle-30days",
+              "network_id": 10,
+              "price": 50,
+              "product_code": "1234",
+              "product_type": "SMS",
+              "unit": "SMS"
+            }
+          ],
+          "meta": {
+            "current_page": 1,
+            "has_next_page?": true,
+            "has_previous_page?": false,
+            "next_page": 2,
+            "page_size": 5
+          }
+        },
+        "properties": {
+          "data": {
+            "description": "List of products",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            },
+            "type": "array",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Metadata"
+          }
+        },
+        "title": "ProductsResponse",
+        "type": "object",
+        "x-struct": "Elixir.SimcontrolWeb.OpenApi.ProductSchema.ProductsResponse",
+        "x-validate": null
+      },
+      "UsageDetailsResponse": {
+        "description": "Response schema for Usage Details",
+        "example": {
+          "data": {
+            "2024-01-01": {
+              "airtime_usage": "15.00",
+              "data_usage": "30.00",
+              "off_net_minute_usage": "20.00",
+              "on_net_minute_usage": "20.00",
+              "sms_usage": 10
+            },
+            "2024-01-02": {
+              "airtime_usage": "65.00",
+              "data_usage": "30.00",
+              "off_net_minute_usage": "20.00",
+              "on_net_minute_usage": "20.00",
+              "sms_usage": 1
+            }
+          },
+          "meta": {
+            "current_page": 1,
+            "has_next_page?": true,
+            "has_previous_page?": false,
+            "next_page": 2,
+            "page_size": 5
+          }
+        },
+        "properties": {
+          "data": {
+            "additionalProperties": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            },
+            "type": "object",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Metadata"
+          }
+        },
+        "title": "UsageDetailsResponse",
+        "type": "object",
+        "x-struct": "Elixir.SimcontrolWeb.OpenApi.UsageSchema.UsageDetailsResponse",
+        "x-validate": null
+      },
+      "ProductCode": {
+        "title": "ProductCode",
+        "type": "string",
+        "x-struct": null,
+        "x-validate": null
+      },
+      "RulesResponse": {
+        "description": "Response schema for multiple Rules",
+        "example": {
+          "data": [
+            {
+              "active": true,
+              "description": "Network Daily data rule",
+              "id": 124,
+              "name": "Data Daily",
+              "network_id": 1,
+              "product_type": "DATA",
+              "rule_type": "SCHEDULE",
+              "schedule_rule": {
+                "end_date": "2025-03-01",
+                "recurrences": "DTSTART;TZID=Etc/UTC:20240301T000000Z\nRRULE:FREQ=DAILY;INTERVAL=1;BYDAY=MO,TU,WE,TH,FR,SA,SU",
+                "start_date": "2024-03-01"
+              }
+            },
+            {
+              "active": false,
+              "description": "",
+              "id": 125,
+              "name": "APN Rule",
+              "network_id": 2,
+              "product_type": "TOP_UP",
+              "rule_type": "QUOTA"
+            }
+          ],
+          "meta": {
+            "current_page": 1,
+            "has_next_page?": true,
+            "has_previous_page?": false,
+            "next_page": 2,
+            "page_size": 5
+          }
+        },
+        "properties": {
+          "data": {
+            "description": "List of rules",
+            "items": {
+              "description": "A rule",
+              "properties": {
+                "active": {
+                  "title": "Active",
+                  "type": "boolean",
+                  "x-struct": null,
+                  "x-validate": null
+                },
+                "description": {
+                  "title": "Description",
+                  "type": "string",
+                  "x-struct": null,
+                  "x-validate": null
+                },
+                "id": {
+                  "title": "RuleID",
+                  "type": "integer",
+                  "x-struct": null,
+                  "x-validate": null
+                },
+                "name": {
+                  "title": "Name",
+                  "type": "string",
+                  "x-struct": null,
+                  "x-validate": null
+                },
+                "network_id": {
+                  "description": "ID of the Network the Rule is for",
+                  "title": "NetworkID",
+                  "type": "integer",
+                  "x-struct": null,
+                  "x-validate": null
+                },
+                "product_type": {
+                  "enum": [
+                    "AIRTIME",
+                    "AIRTIME_BUNDLE",
+                    "DATA",
+                    "SMS",
+                    "TOP_UP",
+                    "VOICE_MINUTE_BUNDLE"
+                  ],
+                  "title": "ProductType",
+                  "type": "string",
+                  "x-struct": null,
+                  "x-validate": null
+                },
+                "rule_type": {
+                  "enum": [
+                    "ORG_BUNDLE_USAGE",
+                    "QUOTA",
+                    "SCHEDULE",
+                    "USAGE"
+                  ],
+                  "title": "RuleType",
+                  "type": "string",
+                  "x-struct": null,
+                  "x-validate": null
+                },
+                "schedule_rule": {
+                  "nullable": true,
+                  "properties": {
+                    "end_date": {
+                      "description": "End date of the schedule rule.\nWill be null if the schedule rule does not have an end date.\n",
+                      "format": "date",
+                      "title": "EndDate",
+                      "type": "string",
+                      "x-struct": null,
+                      "x-validate": null
+                    },
+                    "recurrences": {
+                      "description": "iCalendar RRULE string defining the recurrence pattern.\nFormat: 'DTSTART;TZID=Etc/UTC:YYYYMMDDTHHMMSSZ\nRRULE:FREQ=[FREQ];[OPTIONS]'\n",
+                      "title": "Recurrences",
+                      "type": "string",
+                      "x-struct": null,
+                      "x-validate": null
+                    },
+                    "start_date": {
+                      "description": "Start date of the schedule rule",
+                      "format": "date",
+                      "title": "StartDate",
+                      "type": "string",
+                      "x-struct": null,
+                      "x-validate": null
+                    }
+                  },
+                  "title": "ScheduleRule",
+                  "type": "object",
+                  "x-struct": null,
+                  "x-validate": null
+                }
+              },
+              "type": "object",
+              "x-struct": null,
+              "x-validate": null
+            },
+            "type": "array",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Metadata"
+          }
+        },
+        "title": "RulesResponse",
+        "type": "object",
+        "x-struct": "Elixir.SimcontrolWeb.OpenApi.RuleSchema.RulesResponse",
+        "x-validate": null
+      },
+      "SIMChangeNetworkRequestMSISDN": {
+        "example": {
+          "msisdn": "+27712345678",
+          "network_id": 12
+        },
+        "properties": {
+          "msisdn": {
+            "description": "The MSISDN of the SIM",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "network_id": {
+            "description": "Network ID to change to",
+            "type": "integer",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "msisdn",
+          "network_id"
+        ],
+        "title": "SIMChangeNetworkRequestMSISDN",
+        "type": "object",
+        "x-struct": null,
+        "x-validate": null
+      },
+      "SIMAddRequest": {
+        "description": "Request schema for adding a SIM.\nThe SIM identifier to be used for SIM creation depends on the SIM network.\n",
+        "oneOf": [
+          {
+            "example": {
+              "description": "New SIM",
+              "msisdn": "+27826787890",
+              "network_id": 2
+            },
+            "properties": {
+              "description": {
+                "description": "SIM Description",
+                "type": "string",
+                "x-struct": null,
+                "x-validate": null
+              },
+              "msisdn": {
+                "description": "The MSISDN of the SIM",
+                "type": "string",
+                "x-struct": null,
+                "x-validate": null
+              },
+              "network_id": {
+                "description": "Network ID",
+                "type": "integer",
+                "x-struct": null,
+                "x-validate": null
+              }
+            },
+            "required": [
+              "msisdn",
+              "network_id"
+            ],
+            "title": "SIMddRequestMSISDN",
+            "type": "object",
+            "x-struct": null,
+            "x-validate": null
+          },
+          {
+            "example": {
+              "iccid": "89087000000005983688",
+              "network_id": 3
+            },
+            "properties": {
+              "description": {
+                "description": "SIM Description",
+                "type": "string",
+                "x-struct": null,
+                "x-validate": null
+              },
+              "iccid": {
+                "description": "The ICCID of the SIM",
+                "type": "string",
+                "x-struct": null,
+                "x-validate": null
+              },
+              "network_id": {
+                "description": "Network ID",
+                "type": "integer",
+                "x-struct": null,
+                "x-validate": null
+              }
+            },
+            "required": [
+              "iccid",
+              "network_id"
+            ],
+            "title": "SIMddRequestICCID",
+            "type": "object",
+            "x-struct": null,
+            "x-validate": null
+          },
+          {
+            "example": {
+              "imsi": "655013680776838",
+              "network_id": 4
+            },
+            "properties": {
+              "description": {
+                "description": "SIM Description",
+                "type": "string",
+                "x-struct": null,
+                "x-validate": null
+              },
+              "imsi": {
+                "description": "The IMSI of the SIM",
+                "type": "string",
+                "x-struct": null,
+                "x-validate": null
+              },
+              "network_id": {
+                "description": "Network ID",
+                "type": "integer",
+                "x-struct": null,
+                "x-validate": null
+              }
+            },
+            "required": [
+              "imsi",
+              "network_id"
+            ],
+            "title": "SIMddRequestIMSI",
+            "type": "object",
+            "x-struct": null,
+            "x-validate": null
+          }
+        ],
+        "title": "SIMAddRequest",
+        "x-struct": "Elixir.SimcontrolWeb.OpenApi.SimSchema.SIMAddRequest",
+        "x-validate": null
+      },
+      "ActionUnsupportedResponse": {
+        "description": "Response when action is not supported",
+        "example": {
+          "error": "SIM network does not support IMEI locking"
+        },
+        "properties": {
+          "error": {
+            "properties": {
+              "error": {
+                "description": "Message about action support",
+                "type": "string",
+                "x-struct": null,
+                "x-validate": null
+              }
+            },
+            "type": "object",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "title": "ActionUnsupportedResponse",
+        "type": "object",
+        "x-struct": "Elixir.SimcontrolWeb.OpenApi.CommonSchemas.ActionUnsupportedResponse",
+        "x-validate": null
+      },
+      "Ok": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "title": "Ok",
+        "type": "object",
+        "x-struct": "Elixir.SimcontrolWeb.OpenApi.CommonSchemas.Ok",
+        "x-validate": null
+      },
+      "StartDate": {
+        "description": "Start date of the schedule rule",
+        "format": "date",
+        "title": "StartDate",
+        "type": "string",
+        "x-struct": null,
+        "x-validate": null
+      },
+      "SIMddRequestMSISDN": {
+        "example": {
+          "description": "New SIM",
+          "msisdn": "+27826787890",
+          "network_id": 2
+        },
+        "properties": {
+          "description": {
+            "description": "SIM Description",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "msisdn": {
+            "description": "The MSISDN of the SIM",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "network_id": {
+            "description": "Network ID",
+            "type": "integer",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "msisdn",
+          "network_id"
+        ],
+        "title": "SIMddRequestMSISDN",
+        "type": "object",
+        "x-struct": null,
+        "x-validate": null
+      },
+      "Label": {
+        "title": "Label",
+        "type": "string",
+        "x-struct": null,
+        "x-validate": null
+      },
+      "UsageResponse": {
+        "description": "Response schema for Usages",
+        "example": {
+          "data": {
+            "+27828989273": {
+              "airtime_usage": "15.00",
+              "data_usage": "30.00",
+              "off_net_minute_usage": "20.00",
+              "on_net_minute_usage": "20.00",
+              "sms_usage": 10
+            },
+            "+27828989274": {
+              "airtime_usage": "65.00",
+              "data_usage": "30.00",
+              "off_net_minute_usage": "20.00",
+              "on_net_minute_usage": "20.00",
+              "sms_usage": 1
+            }
+          },
+          "meta": {
+            "current_page": 1,
+            "has_next_page?": true,
+            "has_previous_page?": false,
+            "next_page": 2,
+            "page_size": 5
+          }
+        },
+        "properties": {
+          "data": {
+            "additionalProperties": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            },
+            "type": "object",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Metadata"
+          }
+        },
+        "title": "UsageResponse",
+        "type": "object",
+        "x-struct": "Elixir.SimcontrolWeb.OpenApi.UsageSchema.UsageResponse",
+        "x-validate": null
+      },
+      "RechargeResponse": {
+        "description": "Response schema for a recharge",
+        "example": {
+          "created": "2023-01-01T09:00:00Z",
+          "failure_type": null,
+          "msisdn": "+27821234567",
+          "price": 25,
+          "product_id": 124,
+          "product_type": "DATA",
+          "reference": "test_recharge_ref",
+          "rule_id": 456,
+          "status": "SUCCEEDED",
+          "succeeded_at": "2023-01-01T10:00:00Z",
+          "transaction_id": "d1b81f4b-c506-4a37-9275-6a9a82edff23"
+        },
+        "properties": {
+          "created": {
+            "description": "Recharge Creation Date",
+            "format": "date-time",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "failure_type": {
+            "description": "Type of failure if recharge failed",
+            "nullable": true,
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "msisdn": {
+            "description": "MSISDN of SIM which was recharged",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "price": {
+            "description": "Recharge Price",
+            "format": "decimal",
+            "type": "number",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "product_id": {
+            "description": "Product ID associated with the recharge, if applicable",
+            "type": "integer",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "product_type": {
+            "description": "Product Type (e.g., AIRTIME, DATA, SMS)",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "reference": {
+            "description": "Recharge Reference",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "rule_id": {
+            "description": "Rule ID associated with the recharge, if recharge was initiated by a rule",
+            "nullable": true,
+            "type": "integer",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "status": {
+            "description": "Recharge Status",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "succeeded_at": {
+            "description": "Timestamp when recharge succeeded, if successful",
+            "format": "date-time",
+            "nullable": true,
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "transaction_id": {
+            "description": "Recharge Transaction ID",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "title": "RechargeResponse",
+        "type": "object",
+        "x-struct": "Elixir.SimcontrolWeb.OpenApi.RechargeSchema.RechargeResponse",
+        "x-validate": null
+      },
+      "UnprocessableEntity": {
+        "description": "Validation failed for the requested operation.",
+        "example": {
+          "errors": [
+            {
+              "detail": "Missing field: rule_id",
+              "source": {
+                "pointer": "/rule_id"
+              },
+              "title": "Invalid value"
+            }
+          ]
+        },
+        "properties": {
+          "errors": {
+            "description": "List of validation errors",
+            "items": {
+              "properties": {
+                "detail": {
+                  "description": "Detailed error message",
+                  "example": "Missing field: rule_id",
+                  "type": "string",
+                  "x-struct": null,
+                  "x-validate": null
+                },
+                "source": {
+                  "properties": {
+                    "pointer": {
+                      "description": "JSON pointer to the field with the error",
+                      "example": "/rule_id",
+                      "type": "string",
+                      "x-struct": null,
+                      "x-validate": null
+                    }
+                  },
+                  "type": "object",
+                  "x-struct": null,
+                  "x-validate": null
+                },
+                "title": {
+                  "description": "Error title",
+                  "example": "Invalid value",
+                  "type": "string",
+                  "x-struct": null,
+                  "x-validate": null
+                }
+              },
+              "type": "object",
+              "x-struct": null,
+              "x-validate": null
+            },
+            "type": "array",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "title": "UnprocessableEntity",
+        "type": "object",
+        "x-struct": "Elixir.SimcontrolWeb.OpenApi.CommonSchemas.UnprocessableEntity",
+        "x-validate": null
+      },
+      "Forbidden": {
+        "properties": {
+          "error": {
+            "description": "Error message",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "title": "Forbidden",
+        "type": "object",
+        "x-struct": "Elixir.SimcontrolWeb.OpenApi.CommonSchemas.Forbidden",
+        "x-validate": null
+      },
+      "Name": {
+        "title": "Name",
+        "type": "string",
+        "x-struct": null,
+        "x-validate": null
+      },
+      "Metadata": {
+        "properties": {
+          "current_page": {
+            "description": "Current page number",
+            "type": "integer",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "has_next_page?": {
+            "description": "Whether there are more available pages",
+            "type": "boolean",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "has_previous_page?": {
+            "type": "boolean",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "next_page": {
+            "description": "Next page number",
+            "type": "integer",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "page_size": {
+            "description": "Number of results per page",
+            "type": "integer",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "title": "Metadata",
+        "type": "object",
+        "x-struct": "Elixir.SimcontrolWeb.OpenApi.CommonSchemas.Meta",
+        "x-validate": null
+      },
+      "Date": {
+        "example": "2024-01-03",
+        "format": "date",
+        "title": "Date",
+        "type": "string",
+        "x-struct": null,
+        "x-validate": null
+      },
+      "ProductID": {
+        "title": "ProductID",
+        "type": "integer",
+        "x-struct": null,
+        "x-validate": null
+      },
+      "Price": {
+        "title": "Price",
+        "type": "number",
+        "x-struct": null,
+        "x-validate": null
+      },
+      "RuleType": {
+        "enum": [
+          "ORG_BUNDLE_USAGE",
+          "QUOTA",
+          "SCHEDULE",
+          "USAGE"
+        ],
+        "title": "RuleType",
+        "type": "string",
+        "x-struct": null,
+        "x-validate": null
+      },
+      "Organisation": {
+        "description": "An Organisation",
+        "example": {
+          "balance": "10.0"
+        },
+        "properties": {
+          "balance": {
+            "description": "Organisation Balance",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "title": "Organisation",
+        "type": "object",
+        "x-struct": "Elixir.SimcontrolWeb.OpenApi.OrganisationSchema.Organisation",
+        "x-validate": null
+      },
+      "Unauthorized": {
+        "description": "Invalid API key",
+        "title": "Unauthorized",
+        "x-struct": "Elixir.SimcontrolWeb.OpenApi.CommonSchemas.Unauthorized",
+        "x-validate": null
+      },
+      "NetworkID": {
+        "title": "NetworkID",
+        "type": "integer",
+        "x-struct": null,
+        "x-validate": null
+      },
+      "SIMChangeNetworkRequestIMSI": {
+        "example": {
+          "imsi": "234567890123456",
+          "network_id": 23410
+        },
+        "properties": {
+          "imsi": {
+            "description": "The IMSI of the SIM",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "network_id": {
+            "description": "Network ID to change to",
+            "type": "integer",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "imsi",
+          "network_id"
+        ],
+        "title": "SIMChangeNetworkRequestIMSI",
+        "type": "object",
+        "x-struct": null,
+        "x-validate": null
+      },
+      "SIM": {
+        "description": "A SIM",
+        "properties": {
+          "airtime_balance": {
+            "description": "The airtime balance of the SIM",
+            "type": "number",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "apn_serving_network": {
+            "description": "The Mobile network of the SIM if the SIM is on a APN",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "created": {
+            "description": "The date and time the SIM was created",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "data_balance_in_mb": {
+            "description": "The data balance of the SIM in MB",
+            "type": "number",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "description": {
+            "description": "A User provided description to identify the SIM",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "iccid": {
+            "description": "The ICCID of the SIM",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "id": {
+            "description": "The ID of the SIM",
+            "type": "integer",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "imei": {
+            "description": "The IMEI of the SIM",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "imei_locked": {
+            "description": "Indicates whether the SIM is IMEI locked",
+            "type": "boolean",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "imsi": {
+            "description": "The IMSI of the SIM",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "ip_address": {
+            "description": "IP address of the SIM. Only available on Flickswitch APN SIMs if your organisation has a static CIDR assigned.",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "last_balance_check": {
+            "description": "The date and time the last balance check was performed",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "msisdn": {
+            "description": "The MSISDN of the SIM",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "network_id": {
+            "description": "The ID of the Mobile network of the SIM",
+            "type": "integer",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "network_status": {
+            "description": "The network status of the SIM",
+            "enum": [
+              "ACTIVE",
+              "ADMIN_LOCKED",
+              "APN_LOCKED",
+              "CONTRACT_SUBSCRIBER",
+              "DELETED",
+              "ICAP_LOCKED",
+              "INVALID_MSISDN",
+              "POST_ACTIVE",
+              "PRE_ACTIVE",
+              "SMS_VALIDATION_DECLINED",
+              "SMS_VALIDATION_PENDING",
+              "SUBSCRIBER_DOES_NOT_EXIST"
+            ],
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "roaming": {
+            "description": "The roaming status of the SIM",
+            "type": "boolean",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "sms_balance": {
+            "description": "The SMS balance of the SIM",
+            "type": "number",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "status": {
+            "description": "The status of the SIM",
+            "enum": [
+              "MANAGED",
+              "PAUSED",
+              "STAGED",
+              "SUSPENDED"
+            ],
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "suspended_at": {
+            "description": "The date and time the SIM was suspended",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "tags": {
+            "description": "Tags associated with the SIM",
+            "items": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            },
+            "type": "array",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "title": "SIM",
+        "type": "object",
+        "x-struct": "Elixir.SimcontrolWeb.OpenApi.SimSchema.SIM",
+        "x-validate": null
+      },
+      "DaysValid": {
+        "title": "DaysValid",
+        "type": "integer",
+        "x-struct": null,
+        "x-validate": null
+      },
+      "Description": {
+        "title": "Description",
+        "type": "string",
+        "x-struct": null,
+        "x-validate": null
+      },
+      "NetworkName": {
+        "title": "NetworkName",
+        "type": "string",
+        "x-struct": null,
+        "x-validate": null
+      }
+    },
+    "securitySchemes": {
+      "authorization": {
+        "in": "header",
+        "name": "x-api-key",
+        "type": "apiKey"
+      }
+    }
+  },
+  "info": {
+    "description": "This is the official API documentation for SIMcontrol.\nThe SIMcontrol API allows developers to manage SIM cards, monitor usage, control rules and data allocation, and integrate various mobile network functionalities into their applications.\n",
+    "termsOfService": "https://simcontrol.co.za/terms-of-service/",
+    "title": "Simcontrol",
+    "version": "2.0"
+  },
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/networks": {
+      "get": {
+        "callbacks": {},
+        "description": "Retrieve a paginated list of network names with their respective IDs",
+        "operationId": "network_index",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NetworksResponse"
+                }
+              }
+            },
+            "description": "Networks Response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            },
+            "description": "Unauthorized response"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TooManyRequests"
+                }
+              }
+            },
+            "description": "API Rate limited"
+          }
+        },
+        "summary": "List networks",
+        "tags": [
+          "networks"
+        ]
+      }
+    },
+    "/api/organisations/balance": {
+      "get": {
+        "callbacks": {},
+        "operationId": "SimcontrolWeb.Api.OrganisationController.balance",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganisationResponse"
+                }
+              }
+            },
+            "description": "Organisation response"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TooManyRequests"
+                }
+              }
+            },
+            "description": "API Rate limited"
+          }
+        },
+        "summary": "Organisation balance",
+        "tags": [
+          "organisations"
+        ]
+      }
+    },
+    "/api/products": {
+      "get": {
+        "callbacks": {},
+        "description": "Retrieves a paginated list of products.\n      Supports filtering by network ID and product type.",
+        "operationId": "product_index",
+        "parameters": [
+          {
+            "description": "Filter products by Network ID.",
+            "example": 12,
+            "in": "query",
+            "name": "network_id",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Filter Products by Product type",
+            "example": "DATA",
+            "in": "query",
+            "name": "product_type",
+            "required": false,
+            "schema": {
+              "enum": [
+                "AIRTIME",
+                "AIRTIME_BUNDLE",
+                "DATA",
+                "SMS",
+                "TOP_UP",
+                "VOICE_MINUTE_BUNDLE"
+              ],
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Results Page",
+            "example": 1,
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Number of results per page",
+            "example": 50,
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductsResponse"
+                }
+              }
+            },
+            "description": "Products response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            },
+            "description": "Unauthorized response"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TooManyRequests"
+                }
+              }
+            },
+            "description": "API Rate limited"
+          }
+        },
+        "summary": "List Products",
+        "tags": [
+          "products"
+        ]
+      }
+    },
+    "/api/recharge": {
+      "get": {
+        "callbacks": {},
+        "operationId": "list_recharges",
+        "parameters": [
+          {
+            "description": "Filter recharges by Transaction ID.",
+            "example": "d1b81f4b-c506-4a37-9275-6a9a82edff23",
+            "in": "query",
+            "name": "transaction_id",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Filter recharges by Rule ID. Obtain Rule IDs from the 'Rule Index' endpoint.",
+            "example": 42,
+            "in": "query",
+            "name": "rule_id",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Filter recharges by Rule Type",
+            "example": "SCHEDULE",
+            "in": "query",
+            "name": "rule_type",
+            "required": false,
+            "schema": {
+              "enum": [
+                "QUOTA",
+                "SCHEDULE",
+                "USAGE"
+              ],
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Filter recharges by SIM ID.",
+            "example": 123,
+            "in": "query",
+            "name": "sim_id",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Start date for recharges, defaults to 1st of the month.",
+            "in": "query",
+            "name": "start_date",
+            "required": false,
+            "schema": {
+              "example": "2024-01-03",
+              "format": "date",
+              "title": "Date",
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "End date for recharges, defaults to today.",
+            "in": "query",
+            "name": "end_date",
+            "required": false,
+            "schema": {
+              "example": "2024-01-03",
+              "format": "date",
+              "title": "Date",
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Results Page",
+            "example": 1,
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Number of results per page",
+            "example": 50,
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RechargeResponse"
+                }
+              }
+            },
+            "description": "Recharge Response response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            },
+            "description": "Not found response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnprocessableEntity"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TooManyRequests"
+                }
+              }
+            },
+            "description": "API Rate limited"
+          }
+        },
+        "summary": "List Recharges",
+        "tags": [
+          "recharges"
+        ]
+      },
+      "post": {
+        "callbacks": {},
+        "operationId": "recharge_sim",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RechargeRequest"
+              }
+            }
+          },
+          "description": "SIM recharge attributes",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RechargeResponse"
+                }
+              }
+            },
+            "description": "Recharge Response response"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InsufficientFunds"
+                }
+              }
+            },
+            "description": "Insufficient funds response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnprocessableEntity"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TooManyRequests"
+                }
+              }
+            },
+            "description": "API Rate limited"
+          }
+        },
+        "summary": "Rechage SIM",
+        "tags": [
+          "recharges"
+        ]
+      }
+    },
+    "/api/rules": {
+      "get": {
+        "callbacks": {},
+        "description": "List all Rules for your organisation.\nAllows filtering by name, network, product, and SIM ID.\n",
+        "operationId": "list_rules",
+        "parameters": [
+          {
+            "description": "Filter by Rule's active state.",
+            "example": true,
+            "in": "query",
+            "name": "active",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Filter by full or partial Rule name.",
+            "example": "weekly",
+            "in": "query",
+            "name": "name",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Filter rules by Network ID.",
+            "example": 12,
+            "in": "query",
+            "name": "network_id",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Filter rules by Product ID.",
+            "example": 2,
+            "in": "query",
+            "name": "product_id",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Filter rules by SIM ID.",
+            "example": 123,
+            "in": "query",
+            "name": "sim_id",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Results Page",
+            "example": 1,
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Number of results per page",
+            "example": 50,
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RulesResponse"
+                }
+              }
+            },
+            "description": "Rules response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            },
+            "description": "Unauthorized response"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TooManyRequests"
+                }
+              }
+            },
+            "description": "API Rate limited"
+          }
+        },
+        "summary": "Rule Index",
+        "tags": [
+          "rules"
+        ]
+      }
+    },
+    "/api/rules/sims": {
+      "delete": {
+        "callbacks": {},
+        "description": "Removes a SIM from a Rule returning `404` if either one of the provided SIM or Rule is not found.\n",
+        "operationId": "SimcontrolWeb.Api.RuleController.remove_sim",
+        "parameters": [
+          {
+            "description": "The Rule ID to remove the provided SIM from.",
+            "example": 2,
+            "in": "query",
+            "name": "rule_id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "MSISDN in e164 format",
+            "example": "+27828989462",
+            "in": "query",
+            "name": "msisdn",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "ICCID",
+            "example": "9938327266710498899",
+            "in": "query",
+            "name": "iccid",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "IMSI",
+            "example": "20499117316899",
+            "in": "query",
+            "name": "imsi",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ok"
+                }
+              }
+            },
+            "description": "SIM removed from rule successfully."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            },
+            "description": "SIM or rule Not found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnprocessableEntity"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TooManyRequests"
+                }
+              }
+            },
+            "description": "API Rate limited"
+          }
+        },
+        "summary": "Remove SIM from Rule",
+        "tags": [
+          "rules"
+        ]
+      },
+      "post": {
+        "callbacks": {},
+        "description": "Adds a SIM to a Rule returning `404` if either one of the provided SIM or Rule is not found.\nThe provided SIM and Rule must both be active and compatible returning `400` if not.\n",
+        "operationId": "SimcontrolWeb.Api.RuleController.add_sim",
+        "parameters": [
+          {
+            "description": "The Rule ID to add the provided SIM to.",
+            "example": 2,
+            "in": "query",
+            "name": "rule_id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "MSISDN in e164 format",
+            "example": "+27828989462",
+            "in": "query",
+            "name": "msisdn",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "ICCID",
+            "example": "9938327266710498899",
+            "in": "query",
+            "name": "iccid",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "IMSI",
+            "example": "20499117316899",
+            "in": "query",
+            "name": "imsi",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Created"
+                }
+              }
+            },
+            "description": "SIM added to rule successfully."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            },
+            "description": "SIM and rule are incompatible"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            },
+            "description": "SIM or rule Not found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnprocessableEntity"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TooManyRequests"
+                }
+              }
+            },
+            "description": "API Rate limited"
+          }
+        },
+        "summary": "Add SIM to Rule",
+        "tags": [
+          "rules"
+        ]
+      }
+    },
+    "/api/sims": {
+      "get": {
+        "callbacks": {},
+        "description": "List all SIMs for your organisation.\nAllows filtering by MSISDN, ICCID, IMSI and network.\n",
+        "operationId": "list_sims",
+        "parameters": [
+          {
+            "description": "Partial or full ICCID to filter results.",
+            "example": "99980",
+            "in": "query",
+            "name": "iccid",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Partial or full IMSI to filter results.",
+            "example": "20499",
+            "in": "query",
+            "name": "imsi",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Partial or full MSISDN to filter results.",
+            "example": "+2782",
+            "in": "query",
+            "name": "msisdn",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Filter by SIM network ID.",
+            "example": 15,
+            "in": "query",
+            "name": "network_id",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Status of SIMs default: MANAGED",
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "default": "MANAGED",
+              "enum": [
+                "ALL",
+                "MANAGED",
+                "PAUSED",
+                "STAGED",
+                "SUSPENDED"
+              ],
+              "example": "ALL",
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Results Page",
+            "example": 1,
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Number of results per page",
+            "example": 50,
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SIMsResponse"
+                }
+              }
+            },
+            "description": "SIMs response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnprocessableEntity"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TooManyRequests"
+                }
+              }
+            },
+            "description": "API Rate limited"
+          }
+        },
+        "summary": "SIM Index",
+        "tags": [
+          "sims"
+        ]
+      },
+      "patch": {
+        "callbacks": {},
+        "description": "Updates a SIM with the given SIM update attributes.\nOne identifier field (MSISDN, IMSI, or ICCID) is required to locate the SIM.\nIdentifier values cannot be updated.\n",
+        "operationId": "update_sim",
+        "parameters": [
+          {
+            "description": "MSISDN in e164 format",
+            "example": "+27828989462",
+            "in": "query",
+            "name": "msisdn",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "ICCID",
+            "example": "9938327266710498899",
+            "in": "query",
+            "name": "iccid",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "IMSI",
+            "example": "20499117316899",
+            "in": "query",
+            "name": "imsi",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SIMUpdateRequest"
+              }
+            }
+          },
+          "description": "SIM update attributes",
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SIMResponse"
+                }
+              }
+            },
+            "description": "SIM Response"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InsufficientFunds"
+                }
+              }
+            },
+            "description": "Insufficient funds response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnprocessableEntity"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TooManyRequests"
+                }
+              }
+            },
+            "description": "API Rate limited"
+          }
+        },
+        "summary": "Update SIM",
+        "tags": [
+          "sims"
+        ]
+      },
+      "post": {
+        "callbacks": {},
+        "description": "Creates a new SIM on the specified network.",
+        "operationId": "create_sim",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "examples": {
+                "iccid_example": {
+                  "description": "Request using ICCID identifier",
+                  "summary": "Example with ICCID",
+                  "value": {
+                    "iccid": "89441234567890123456",
+                    "network_id": 12
+                  }
+                },
+                "imsi_example": {
+                  "description": "Request using IMSI identifier",
+                  "summary": "Example with IMSI",
+                  "value": {
+                    "imsi": "234567890123456",
+                    "network_id": 12
+                  }
+                },
+                "msisdn_example": {
+                  "description": "Request using MSISDN identifier",
+                  "summary": "Example with MSISDN",
+                  "value": {
+                    "msisdn": "+27712345678",
+                    "network_id": 12
+                  }
+                }
+              },
+              "schema": {
+                "$ref": "#/components/schemas/SIMAddRequest"
+              }
+            }
+          },
+          "description": "SIM create attributes",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SIMResponse"
+                }
+              }
+            },
+            "description": "SIM Response"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InsufficientFunds"
+                }
+              }
+            },
+            "description": "Insufficient funds response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnprocessableEntity"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TooManyRequests"
+                }
+              }
+            },
+            "description": "API Rate limited"
+          }
+        },
+        "summary": "Create SIM",
+        "tags": [
+          "sims"
+        ]
+      }
+    },
+    "/api/sims-activate": {
+      "post": {
+        "callbacks": {},
+        "description": "Activates the specified SIM.\nThis operation may incur charges and requires sufficient funds in your organisation's account.\n",
+        "operationId": "activate_sim",
+        "parameters": [
+          {
+            "description": "MSISDN in e164 format",
+            "example": "+27828989462",
+            "in": "query",
+            "name": "msisdn",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "ICCID",
+            "example": "9938327266710498899",
+            "in": "query",
+            "name": "iccid",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "IMSI",
+            "example": "20499117316899",
+            "in": "query",
+            "name": "imsi",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SIMResponse"
+                }
+              }
+            },
+            "description": "SIM response"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InsufficientFunds"
+                }
+              }
+            },
+            "description": "Insufficient funds response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            },
+            "description": "Not found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnprocessableEntity"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TooManyRequests"
+                }
+              }
+            },
+            "description": "API Rate limited"
+          }
+        },
+        "summary": "Activate SIM",
+        "tags": [
+          "sims"
+        ]
+      }
+    },
+    "/api/sims-balances": {
+      "get": {
+        "callbacks": {},
+        "description": "Retrieve latest balances for a SIM. Results will be POSTed to your\n    organisation's configured 'balance callback URL'.",
+        "operationId": "sim_balance",
+        "parameters": [
+          {
+            "description": "MSISDN in e164 format",
+            "example": "+27828989462",
+            "in": "query",
+            "name": "msisdn",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "ICCID",
+            "example": "9938327266710498899",
+            "in": "query",
+            "name": "iccid",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "IMSI",
+            "example": "20499117316899",
+            "in": "query",
+            "name": "imsi",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Accepted"
+                }
+              }
+            },
+            "description": "SIM balance check queued successfully."
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Forbidden"
+                }
+              }
+            },
+            "description": "Organisation is unable to balance check via API."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            },
+            "description": "Not found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnprocessableEntity"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TooManyRequests"
+                }
+              }
+            },
+            "description": "API Rate limited"
+          }
+        },
+        "summary": "SIM balances",
+        "tags": [
+          "sims"
+        ]
+      }
+    },
+    "/api/sims-suspend": {
+      "post": {
+        "callbacks": {},
+        "description": "Suspends the specified SIM.\nThis operation temporarily deactivates the SIM and may affect any active services.\n",
+        "operationId": "suspend_sim",
+        "parameters": [
+          {
+            "description": "MSISDN in e164 format",
+            "example": "+27828989462",
+            "in": "query",
+            "name": "msisdn",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "ICCID",
+            "example": "9938327266710498899",
+            "in": "query",
+            "name": "iccid",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "IMSI",
+            "example": "20499117316899",
+            "in": "query",
+            "name": "imsi",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SIMResponse"
+                }
+              }
+            },
+            "description": "SIM response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            },
+            "description": "Not found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnprocessableEntity"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TooManyRequests"
+                }
+              }
+            },
+            "description": "API Rate limited"
+          }
+        },
+        "summary": "Suspend SIM",
+        "tags": [
+          "sims"
+        ]
+      }
+    },
+    "/api/sims/change-network": {
+      "post": {
+        "callbacks": {},
+        "description": "Changes the network for the specified SIM.\nOne identifier field (MSISDN, IMSI, or ICCID) is required to locate the SIM.\n",
+        "operationId": "change_sim_network",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "examples": {
+                "iccid_example": {
+                  "description": "Request using ICCID identifier",
+                  "summary": "Example with ICCID",
+                  "value": {
+                    "iccid": "89441234567890123456",
+                    "network_id": 12
+                  }
+                },
+                "imsi_example": {
+                  "description": "Request using IMSI identifier",
+                  "summary": "Example with IMSI",
+                  "value": {
+                    "imsi": "234567890123456",
+                    "network_id": 12
+                  }
+                },
+                "msisdn_example": {
+                  "description": "Request using MSISDN identifier",
+                  "summary": "Example with MSISDN",
+                  "value": {
+                    "msisdn": "+27712345678",
+                    "network_id": 12
+                  }
+                }
+              },
+              "schema": {
+                "$ref": "#/components/schemas/SIMChangeNetworkRequest"
+              }
+            }
+          },
+          "description": "Network change attributes",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SIMResponse"
+                }
+              }
+            },
+            "description": "SIM response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            },
+            "description": "Not found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnprocessableEntity"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TooManyRequests"
+                }
+              }
+            },
+            "description": "API Rate limited"
+          }
+        },
+        "summary": "Change SIM Network",
+        "tags": [
+          "sims"
+        ]
+      }
+    },
+    "/api/sims/imei-lock": {
+      "post": {
+        "callbacks": {},
+        "description": "IMEI lock the specified SIM.",
+        "operationId": "lock_imei",
+        "parameters": [
+          {
+            "description": "MSISDN in e164 format",
+            "example": "+27828989462",
+            "in": "query",
+            "name": "msisdn",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "ICCID",
+            "example": "9938327266710498899",
+            "in": "query",
+            "name": "iccid",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "IMSI",
+            "example": "20499117316899",
+            "in": "query",
+            "name": "imsi",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SIMResponse"
+                }
+              }
+            },
+            "description": "SIM IMEI locked"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionUnsupportedResponse"
+                }
+              }
+            },
+            "description": "Action unsupported"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            },
+            "description": "Not found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TooManyRequests"
+                }
+              }
+            },
+            "description": "API Rate limited"
+          }
+        },
+        "summary": "IMEI lock",
+        "tags": [
+          "sims"
+        ]
+      }
+    },
+    "/api/sims/imei-unlock": {
+      "post": {
+        "callbacks": {},
+        "description": "IMEI unlock the specified SIM.",
+        "operationId": "unlock_imei",
+        "parameters": [
+          {
+            "description": "MSISDN in e164 format",
+            "example": "+27828989462",
+            "in": "query",
+            "name": "msisdn",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "ICCID",
+            "example": "9938327266710498899",
+            "in": "query",
+            "name": "iccid",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "IMSI",
+            "example": "20499117316899",
+            "in": "query",
+            "name": "imsi",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SIMResponse"
+                }
+              }
+            },
+            "description": "SIM IMEI unlocked"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionUnsupportedResponse"
+                }
+              }
+            },
+            "description": "Action unsupported"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            },
+            "description": "Not found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TooManyRequests"
+                }
+              }
+            },
+            "description": "API Rate limited"
+          }
+        },
+        "summary": "IMEI unlock",
+        "tags": [
+          "sims"
+        ]
+      }
+    },
+    "/api/sims/reset-connection": {
+      "post": {
+        "callbacks": {},
+        "description": "Resets the session connection for an APN SIM.\nAPI rate limited to 1 connection reset request per second.\n",
+        "operationId": "reset_sim_connection",
+        "parameters": [
+          {
+            "description": "MSISDN in e164 format",
+            "example": "+27828989462",
+            "in": "query",
+            "name": "msisdn",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "ICCID",
+            "example": "9938327266710498899",
+            "in": "query",
+            "name": "iccid",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "IMSI",
+            "example": "20499117316899",
+            "in": "query",
+            "name": "imsi",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SIMResponse"
+                }
+              }
+            },
+            "description": "SIM connection reset"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionUnsupportedResponse"
+                }
+              }
+            },
+            "description": "Action unsupported"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            },
+            "description": "Not found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TooManyRequests"
+                }
+              }
+            },
+            "description": "API Rate limited"
+          }
+        },
+        "summary": "Reset SIM Connection",
+        "tags": [
+          "sims"
+        ]
+      }
+    },
+    "/api/sims/roaming-off": {
+      "post": {
+        "callbacks": {},
+        "description": "Disable roaming for the specified SIM.",
+        "operationId": "disable_roaming",
+        "parameters": [
+          {
+            "description": "MSISDN in e164 format",
+            "example": "+27828989462",
+            "in": "query",
+            "name": "msisdn",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "ICCID",
+            "example": "9938327266710498899",
+            "in": "query",
+            "name": "iccid",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "IMSI",
+            "example": "20499117316899",
+            "in": "query",
+            "name": "imsi",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SIMResponse"
+                }
+              }
+            },
+            "description": "SIM roaming disabled"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionUnsupportedResponse"
+                }
+              }
+            },
+            "description": "Action unsupported"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            },
+            "description": "Not found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TooManyRequests"
+                }
+              }
+            },
+            "description": "API Rate limited"
+          }
+        },
+        "summary": "Disable roaming",
+        "tags": [
+          "sims"
+        ]
+      }
+    },
+    "/api/sims/roaming-on": {
+      "post": {
+        "callbacks": {},
+        "description": "Enable roaming for the specified SIM.",
+        "operationId": "enable_roaming",
+        "parameters": [
+          {
+            "description": "MSISDN in e164 format",
+            "example": "+27828989462",
+            "in": "query",
+            "name": "msisdn",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "ICCID",
+            "example": "9938327266710498899",
+            "in": "query",
+            "name": "iccid",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "IMSI",
+            "example": "20499117316899",
+            "in": "query",
+            "name": "imsi",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SIMResponse"
+                }
+              }
+            },
+            "description": "SIM roaming enabled"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionUnsupportedResponse"
+                }
+              }
+            },
+            "description": "Action unsupported"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            },
+            "description": "Not found"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TooManyRequests"
+                }
+              }
+            },
+            "description": "API Rate limited"
+          }
+        },
+        "summary": "Enable roaming",
+        "tags": [
+          "sims"
+        ]
+      }
+    },
+    "/api/usage": {
+      "get": {
+        "callbacks": {},
+        "description": "Retrieves a paginated list of usage totals for your organisation's SIMs.\nAllows filtering by MSISDN, ICCID, IMSI and IMEI.\nSuspended SIMs are omitted by default and can be optionally included.\nResults can be limited to a specific date range defaulting to\nthe beginning of the current month until 'today'.\n",
+        "operationId": "SimcontrolWeb.Api.UsageController.index",
+        "parameters": [
+          {
+            "description": "Partial or full ICCID to filter results.",
+            "example": "99980",
+            "in": "query",
+            "name": "iccid",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Partial or full IMSI to filter results.",
+            "example": "20499",
+            "in": "query",
+            "name": "imsi",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Partial or full MSISDN to filter results.",
+            "example": "+2782",
+            "in": "query",
+            "name": "msisdn",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Status of SIMs default: MANAGED",
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "default": "MANAGED",
+              "enum": [
+                "ALL",
+                "MANAGED",
+                "PAUSED",
+                "STAGED",
+                "SUSPENDED"
+              ],
+              "example": "ALL",
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Filter usage totals by Rule ID. Obtain Rule IDs from the 'Rule Index' endpoint.",
+            "example": 42,
+            "in": "query",
+            "name": "rule_id",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Start date for usages, defaults to 1st of the month.",
+            "in": "query",
+            "name": "start_date",
+            "required": false,
+            "schema": {
+              "example": "2024-01-03",
+              "format": "date",
+              "title": "Date",
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "End date for usages, defaults to today.",
+            "in": "query",
+            "name": "end_date",
+            "required": false,
+            "schema": {
+              "example": "2024-01-03",
+              "format": "date",
+              "title": "Date",
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Results Page",
+            "example": 1,
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Number of results per page",
+            "example": 50,
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsageResponse"
+                }
+              }
+            },
+            "description": "Usages response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnprocessableEntity"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TooManyRequests"
+                }
+              }
+            },
+            "description": "API Rate limited"
+          }
+        },
+        "summary": "SIM Usage totals",
+        "tags": [
+          "sim_usage"
+        ]
+      }
+    },
+    "/api/usage-details": {
+      "get": {
+        "callbacks": {},
+        "description": "Retrieves a paginated list of usage information by day for a specific SIM.\nIdentified by either MSISDN, IMEI, IMSI or ICCID.\nResults can be limited to a specific date range defaulting to\nthe beginning of the current month until 'today'.\n",
+        "operationId": "SimcontrolWeb.Api.UsageController.details",
+        "parameters": [
+          {
+            "description": "MSISDN in e164 format",
+            "example": "+27828989462",
+            "in": "query",
+            "name": "msisdn",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "ICCID",
+            "example": "9938327266710498899",
+            "in": "query",
+            "name": "iccid",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "IMSI",
+            "example": "20499117316899",
+            "in": "query",
+            "name": "imsi",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Start date for usages, defaults to 1st of the month.",
+            "in": "query",
+            "name": "start_date",
+            "required": false,
+            "schema": {
+              "example": "2024-01-03",
+              "format": "date",
+              "title": "Date",
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "End date for usages, defaults to today.",
+            "in": "query",
+            "name": "end_date",
+            "required": false,
+            "schema": {
+              "example": "2024-01-03",
+              "format": "date",
+              "title": "Date",
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Results Page",
+            "example": 1,
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Number of results per page",
+            "example": 50,
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsageDetailsResponse"
+                }
+              }
+            },
+            "description": "Usages response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            },
+            "description": "Not found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnprocessableEntity"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TooManyRequests"
+                }
+              }
+            },
+            "description": "API Rate limited"
+          }
+        },
+        "summary": "Detailed SIM usages.",
+        "tags": [
+          "sim_usage"
+        ]
+      }
+    }
+  },
+  "security": [
+    {
+      "authorization": []
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://app.simcontrol.co.za",
+      "variables": {}
+    }
+  ],
+  "tags": [
+    {
+      "description": "Organisation information",
+      "name": "organisations"
+    },
+    {
+      "description": "List available networks",
+      "name": "networks"
+    },
+    {
+      "description": "List available products",
+      "name": "products"
+    },
+    {
+      "description": "Operations related to SIMs",
+      "name": "sims"
+    },
+    {
+      "description": "List, show and create Recharges for SIMs",
+      "name": "recharges"
+    },
+    {
+      "description": "List and show Usage records for SIMS",
+      "name": "sim_usage"
+    },
+    {
+      "description": "Our API implements rate limiting to ensure fair usage and stability of the service. When making requests to the API, you'll receive rate limit information in the response headers.\n\n## Rate Limit Headers\n\n### x-ratelimit-limit\nThe maximum number of requests you can make in a given time window.\n\n**Example:** `x-ratelimit-limit: 100`\n\nThis indicates you can make up to 100 requests in the current time window.\n\n### x-ratelimit-remaining\nThe number of requests remaining in your current time window.\n\n**Example:** `x-ratelimit-remaining: 95`\n\nThis shows you have 95 requests left before hitting the rate limit.\n\n### x-ratelimit-reset\nA Unix timestamp indicating when your current rate limit window will reset.\n\n**Example:** `x-ratelimit-reset: 1644452765`\n\nAfter this timestamp, your request quota will be fully restored.\n\n### retry-after\nWhen you exceed the rate limit, this header indicates how many seconds to wait before making another request.\n\n**Example:** `retry-after: 60`\n\nThis means you should wait 60 seconds before retrying your request.\n\n## Example Response Headers\n```http\nHTTP/1.1 200 OK\nx-ratelimit-limit: 100\nx-ratelimit-remaining: 95\nx-ratelimit-reset: 1644452765\n```\n\n## When You Hit the Rate Limit\nIf you exceed the rate limit, you'll receive a `429 Too Many Requests` response with headers:\n\n```http\nHTTP/1.1 429 Too Many Requests\nretry-after: 60\nx-ratelimit-limit: 100\nx-ratelimit-remaining: 0\nx-ratelimit-reset: 1644452765\n```\n\n## Best Practices\n1. Monitor the `x-ratelimit-remaining` header to track your quota\n2. Use the `x-ratelimit-reset` timestamp to determine when you can resume making requests\n3. Implement exponential backoff when receiving 429 responses\n4. Consider caching responses when appropriate to reduce API calls\n",
+      "name": "rate_limiting"
+    }
+  ],
+  "x-tagGroups": [
+    {
+      "name": "Rate Limiting",
+      "tags": [
+        "rate_limiting"
+      ]
+    },
+    {
+      "name": "Organisations",
+      "tags": [
+        "organisations"
+      ]
+    },
+    {
+      "name": "SIMs",
+      "tags": [
+        "sims",
+        "sim_usage"
+      ]
+    },
+    {
+      "name": "Products",
+      "tags": [
+        "products"
+      ]
+    },
+    {
+      "name": "Recharges",
+      "tags": [
+        "recharges"
+      ]
+    },
+    {
+      "name": "Rules",
+      "tags": [
+        "rules"
+      ]
+    },
+    {
+      "name": "Networks",
+      "tags": [
+        "networks"
+      ]
+    }
+  ]
+}
