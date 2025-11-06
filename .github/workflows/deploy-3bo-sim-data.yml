@@ -24,38 +24,13 @@ jobs:
       - name: Install clasp
         run: npm install -g @google/clasp
 
-      - name: Decode and transform .clasprc.json (from secret)
+      - name: Set up authentication
         run: |
-          echo "${{ secrets.CLASPRC_3BO_SIM_DATA }}" | base64 --decode > /tmp/clasprc-raw.json
-          # Clasp expects a token wrapper structure
-          cat /tmp/clasprc-raw.json | jq '{token: .tokens.default}' > ~/.clasprc.json
+          # Decode credentials (nested tokens.default structure from clasp login)
+          echo "${{ secrets.CLASPRC_3BO_SIM_DATA }}" | base64 --decode > ~/.clasprc.json
           chmod 600 ~/.clasprc.json
-
-      - name: Debug - Check transformed .clasprc.json
-        run: |
-          echo "Checking transformed .clasprc.json..."
-          ls -la ~/.clasprc.json
-          echo "File size:"
-          wc -c ~/.clasprc.json
-          echo "Transformed structure (should be flat, not nested):"
-          cat ~/.clasprc.json | jq .
-
-      - name: Confirm clasp is functional
-        run: |
-          clasp -v
-          echo "Testing clasp authentication..."
-          clasp list 2>&1 | head -5 || echo "Failed to list projects (auth may need refresh)"
 
       - name: Deploy to 3BO SIM Data (Google Apps Script)
         working-directory: deployments/account1-airtime
-        env:
-          HOME: /home/runner
         run: |
           clasp push --force
-
-      - name: Upload .clasprc.json for optional inspection
-        uses: actions/upload-artifact@v4
-        with:
-          name: clasprc-debug
-          path: ~/.clasprc.json
-          if-no-files-found: ignore

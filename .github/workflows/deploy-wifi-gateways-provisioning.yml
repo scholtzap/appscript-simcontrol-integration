@@ -25,22 +25,11 @@ jobs:
 
       - name: Set up authentication
         run: |
-          # Decode credentials with original nested structure
+          # Decode credentials (nested tokens.default structure from clasp login)
           echo "${{ secrets.CLASPRC_WIFI_GATEWAYS_PROVISIONING }}" | base64 --decode > ~/.clasprc.json
           chmod 600 ~/.clasprc.json
-
-          echo "Credentials file created:"
-          ls -la ~/.clasprc.json
-
-          echo "First 200 characters of structure:"
-          head -c 200 ~/.clasprc.json
 
       - name: Deploy to WiFi Gateways Provisioning (Google Apps Script)
         working-directory: deployments/wifi-gateway
         run: |
-          echo "Current directory: $(pwd)"
-          echo ".clasp.json contents:"
-          cat .clasp.json
-
-          echo "Attempting clasp push with verbose output..."
-          NODE_DEBUG=* clasp push --force 2>&1 || true
+          clasp push --force
