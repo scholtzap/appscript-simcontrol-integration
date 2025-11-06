@@ -25,8 +25,19 @@ jobs:
 
       - name: Decode .clasprc.json (from secret)
         run: |
-          mkdir -p ~/.config
           echo "${{ secrets.CLASPRC_PLENTIFY_SIMCONTROL_DATA }}" | base64 --decode > ~/.clasprc.json
+
+      - name: Debug - Check .clasprc.json exists and is valid
+        run: |
+          echo "Checking if .clasprc.json exists..."
+          ls -la ~/.clasprc.json
+          echo "File size:"
+          wc -c ~/.clasprc.json
+          echo "First 100 characters:"
+          head -c 100 ~/.clasprc.json
+          echo ""
+          echo "Validating JSON structure..."
+          cat ~/.clasprc.json | jq . || echo "Invalid JSON!"
 
       - name: Confirm clasp is functional
         run: |
