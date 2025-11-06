@@ -45,8 +45,8 @@ jobs:
       - name: Confirm clasp is functional
         run: |
           clasp -v
-          echo "Checking clasp login status..."
-          clasp login --status || echo "Not logged in or token expired"
+          echo "Testing clasp authentication..."
+          clasp list 2>&1 | head -5 || echo "Failed to list projects (auth may need refresh)"
 
       - name: Deploy to Plentify SimControl Data (Google Apps Script)
         working-directory: deployments/account2-data
