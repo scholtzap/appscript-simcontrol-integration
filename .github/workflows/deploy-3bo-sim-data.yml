@@ -27,8 +27,8 @@ jobs:
       - name: Decode and transform .clasprc.json (from secret)
         run: |
           echo "${{ secrets.CLASPRC_3BO_SIM_DATA }}" | base64 --decode > /tmp/clasprc-raw.json
-          # Transform nested structure to flat structure that clasp expects
-          cat /tmp/clasprc-raw.json | jq '.tokens.default' > ~/.clasprc.json
+          # Clasp expects a token wrapper structure
+          cat /tmp/clasprc-raw.json | jq '{token: .tokens.default}' > ~/.clasprc.json
           chmod 600 ~/.clasprc.json
 
       - name: Debug - Check transformed .clasprc.json
