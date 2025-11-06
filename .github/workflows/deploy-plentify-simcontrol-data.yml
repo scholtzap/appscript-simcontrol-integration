@@ -23,24 +23,21 @@ jobs:
       - name: Install clasp
         run: npm install -g @google/clasp
 
-      - name: Decode .clasprc.json (from secret)
+      - name: Decode and transform .clasprc.json (from secret)
         run: |
-          echo "${{ secrets.CLASPRC_PLENTIFY_SIMCONTROL_DATA }}" | base64 --decode > ~/.clasprc.json
+          echo "${{ secrets.CLASPRC_PLENTIFY_SIMCONTROL_DATA }}" | base64 --decode > /tmp/clasprc-raw.json
+          # Transform nested structure to flat structure that clasp expects
+          cat /tmp/clasprc-raw.json | jq '.tokens.default' > ~/.clasprc.json
+          chmod 600 ~/.clasprc.json
 
-      - name: Debug - Check .clasprc.json exists and is valid
+      - name: Debug - Check transformed .clasprc.json
         run: |
-          echo "Checking if .clasprc.json exists..."
+          echo "Checking transformed .clasprc.json..."
           ls -la ~/.clasprc.json
           echo "File size:"
           wc -c ~/.clasprc.json
-          echo "First 100 characters:"
-          head -c 100 ~/.clasprc.json
-          echo ""
-          echo "Validating JSON structure..."
-          cat ~/.clasprc.json | jq . || echo "Invalid JSON!"
-          echo ""
-          echo "Making file writable for clasp to update tokens..."
-          chmod 600 ~/.clasprc.json
+          echo "Transformed structure (should be flat, not nested):"
+          cat ~/.clasprc.json | jq .
 
       - name: Confirm clasp is functional
         run: |
