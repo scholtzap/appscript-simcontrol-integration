@@ -2,9 +2,24 @@
 
 **Project**: Google Apps Script Multi-Integration System
 **Version**: 2.0
-**Last Updated**: 2025-11-04
+**Last Updated**: 2025-11-06
 
 This guide covers deploying the SimControl Integration system to Google Apps Script using CLASP and GitHub Actions.
+
+---
+
+## 🚀 Automated Deployment (Recommended)
+
+**This project has automated deployment via GitHub Actions!**
+
+When you push changes to the `main` branch, the code automatically deploys to all 3 production Google Sheets:
+- 3BO SIM Data
+- Plentify SimControl Data
+- WiFi Gateways Provisioning
+
+**👉 For automated deployment setup, see: [GITHUB_ACTIONS_SETUP.md](GITHUB_ACTIONS_SETUP.md)**
+
+This guide below covers **manual deployment** using CLASP for local development or troubleshooting.
 
 ---
 

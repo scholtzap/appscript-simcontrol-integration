@@ -1,0 +1,11 @@
+{
+  "tokens": {
+    "default": {
+      "client_id": "1072944905499-vm2v2i5dvn0a0d2o4ca36i1vge8cvbn0.apps.googleusercontent.com",
+      "client_secret": "YOUR_CLIENT_SECRET_HERE",
+      "type": "authorized_user",
+      "refresh_token": "YOUR_REFRESH_TOKEN_HERE",
+      "access_token": "YOUR_ACCESS_TOKEN_HERE"
+    }
+  }
+}

@@ -92,12 +92,36 @@ This project consolidates multiple legacy Apps Script projects into a single, mo
 | [spec.md](spec.md) | System architecture and design | ~15KB |
 | [ROADMAP.md](ROADMAP.md) | Implementation progress tracking | ~10KB |
 | [DEPLOYMENT.md](DEPLOYMENT.md) | Deployment guide | 11KB |
+| [GITHUB_ACTIONS_SETUP.md](GITHUB_ACTIONS_SETUP.md) | **⭐ Automated deployment setup** | 12KB |
 | [TESTING.md](TESTING.md) | Testing procedures | 17KB |
 | [MIGRATION.md](MIGRATION.md) | Production rollout guide | 20KB |
 | [DEPLOYMENT_ORCHESTRATION.md](DEPLOYMENT_ORCHESTRATION.md) | **⭐ Tactical deployment plan** | 25KB |
 | [DEPLOYMENT_QUICKSTART.md](DEPLOYMENT_QUICKSTART.md) | Quick reference card | 7KB |
 | [PRODUCTION_SHEETS.md](PRODUCTION_SHEETS.md) | Production sheet mapping | 6KB |
 | [NEW_SESSION_CONTEXT.md](NEW_SESSION_CONTEXT.md) | Context for new LLM sessions | 15KB |
+
+---
+
+## 🤖 Automated Deployment
+
+The project uses **GitHub Actions** to automatically deploy code changes to all Google Sheets when you push to the `main` branch.
+
+### Active Deployments
+
+| Sheet Name | Workflow | Status |
+|------------|----------|--------|
+| 3BO SIM Data | deploy-3bo-sim-data.yml | ✅ Active |
+| Plentify SimControl Data | deploy-plentify-simcontrol-data.yml | ✅ Active |
+| WiFi Gateways Provisioning | deploy-wifi-gateways-provisioning.yml | ✅ Active |
+
+### How It Works
+
+1. Push changes to `main` branch (especially `src/**` files)
+2. GitHub Actions automatically triggers
+3. Code is deployed to all 3 Google Sheets simultaneously
+4. No manual `clasp push` required!
+
+**Setup Guide**: See [GITHUB_ACTIONS_SETUP.md](GITHUB_ACTIONS_SETUP.md) for complete configuration instructions.
 
 ---
 
