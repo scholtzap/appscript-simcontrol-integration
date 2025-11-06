@@ -1,13 +1,12 @@
-name: Deploy to Google Account 2
+name: Deploy to Plentify SimControl Data
 
 on:
   workflow_dispatch:
-  # Auto-deployment disabled - deploy manually using clasp push
-  # push:
-  #   branches:
-  #     - main
-  #   paths:
-  #     - 'src/**'
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
 
 jobs:
   deploy:
@@ -27,13 +26,13 @@ jobs:
       - name: Decode .clasprc.json (from secret)
         run: |
           mkdir -p ~/.config
-          echo "${{ secrets.CLASPRC_ACCOUNT2 }}" | base64 --decode > ~/.clasprc.json
+          echo "${{ secrets.CLASPRC_PLENTIFY_SIMCONTROL_DATA }}" | base64 --decode > ~/.clasprc.json
 
       - name: Confirm clasp is functional
         run: |
           clasp -v
 
-      - name: Deploy to account2-data (Google Apps Script)
+      - name: Deploy to Plentify SimControl Data (Google Apps Script)
         working-directory: deployments/account2-data
         run: |
           clasp push --force
