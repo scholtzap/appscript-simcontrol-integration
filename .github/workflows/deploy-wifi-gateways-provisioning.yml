@@ -23,31 +23,24 @@ jobs:
       - name: Install clasp
         run: npm install -g @google/clasp
 
-      - name: Decode and transform .clasprc.json (from secret)
+      - name: Set up authentication
         run: |
-          echo "${{ secrets.CLASPRC_WIFI_GATEWAYS_PROVISIONING }}" | base64 --decode > /tmp/clasprc-raw.json
-          # Clasp expects a token wrapper structure
-          cat /tmp/clasprc-raw.json | jq '{token: .tokens.default}' > ~/.clasprc.json
+          # Decode credentials with original nested structure
+          echo "${{ secrets.CLASPRC_WIFI_GATEWAYS_PROVISIONING }}" | base64 --decode > ~/.clasprc.json
           chmod 600 ~/.clasprc.json
 
-      - name: Debug - Check transformed .clasprc.json
-        run: |
-          echo "Checking transformed .clasprc.json..."
+          echo "Credentials file created:"
           ls -la ~/.clasprc.json
-          echo "File size:"
-          wc -c ~/.clasprc.json
-          echo "Transformed structure (should be flat, not nested):"
-          cat ~/.clasprc.json | jq .
 
-      - name: Confirm clasp is functional
-        run: |
-          clasp -v
-          echo "Testing clasp authentication..."
-          clasp list 2>&1 | head -5 || echo "Failed to list projects (auth may need refresh)"
+          echo "First 200 characters of structure:"
+          head -c 200 ~/.clasprc.json
 
       - name: Deploy to WiFi Gateways Provisioning (Google Apps Script)
         working-directory: deployments/wifi-gateway
-        env:
-          HOME: /home/runner
         run: |
-          clasp push --force
+          echo "Current directory: $(pwd)"
+          echo ".clasp.json contents:"
+          cat .clasp.json
+
+          echo "Attempting clasp push with verbose output..."
+          NODE_DEBUG=* clasp push --force 2>&1 || true
