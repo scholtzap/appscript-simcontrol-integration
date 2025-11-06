@@ -248,6 +248,9 @@ function fetchDataUsage() {
  * @param {string} usageType - Either 'airtime' or 'data'
  */
 function fetchPreviousDayUsage(usageType) {
+  var START_TIME = new Date().getTime();
+  var MAX_DURATION_MS = 5.2 * 60 * 1000; // 5.2 minutes (safe buffer before 6min timeout)
+
   // Validate usage type
   if (usageType !== 'airtime' && usageType !== 'data') {
     Logger.logError('Invalid usageType. Must be "airtime" or "data"');
@@ -294,6 +297,8 @@ function fetchPreviousDayUsage(usageType) {
     });
   }
 
+  Logger.log('Total managed SIMs to process: ' + sims.length);
+
   // Ensure header exists and build column map
   var header = [];
   var existingCols = sheet.getLastColumn();
@@ -337,26 +342,86 @@ function fetchPreviousDayUsage(usageType) {
 
   Logger.log('Fetching usage for: ' + dateStr);
 
-  var row = [];
-  for (var i = 0; i < header.length; i++) {
-    row.push(0);
+  // Check if resuming from a previous run
+  var persistedData = PropertiesService.getScriptProperties().getProperty('PREVIOUS_DAY_PROGRESS_' + usageType.toUpperCase());
+  var processedSimsSet = {};
+  var targetRow = null;
+  var isResume = false;
+
+  if (persistedData) {
+    try {
+      var progress = JSON.parse(persistedData);
+      if (progress.date === dateStr) {
+        processedSimsSet = progress.processedSims || {};
+        targetRow = progress.rowIndex;
+        isResume = true;
+        Logger.log('⏭ Resuming from previous run. Already processed: ' + Object.keys(processedSimsSet).length + ' SIMs');
+      }
+    } catch (e) {
+      Logger.logError('Failed to parse persisted progress, starting fresh', e);
+    }
   }
-  row[0] = dateStr;
+
+  // Find or create the row for this date
+  if (!isResume) {
+    // Check if row already exists for this date
+    var lastRow = sheet.getLastRow();
+    if (lastRow > 1) {
+      var dateRange = sheet.getRange(2, 1, lastRow - 1, 1).getValues();
+      for (var i = 0; i < dateRange.length; i++) {
+        var cellDate = dateRange[i][0];
+        if (cellDate instanceof Date) {
+          var cellDateStr = Utilities.formatDate(cellDate, 'GMT', 'yyyy-MM-dd');
+          if (cellDateStr === dateStr) {
+            targetRow = i + 2; // +2 because of header and 0-based index
+            Logger.log('Found existing row for ' + dateStr + ' at row ' + targetRow);
+            break;
+          }
+        }
+      }
+    }
+
+    // If no existing row, create one
+    if (!targetRow) {
+      var row = [];
+      for (var i = 0; i < header.length; i++) {
+        row.push(0);
+      }
+      row[0] = dateStr;
+      sheet.appendRow(row);
+      targetRow = sheet.getLastRow();
+      Logger.log('Created new row for ' + dateStr + ' at row ' + targetRow);
+    }
+  }
 
   // Fetch usage for each SIM
+  var simsProcessed = 0;
   for (var i = 0; i < sims.length; i++) {
     var sim = sims[i];
+    var identifier = sim.msisdn || sim.iccid || sim.imsi;
+    var label = identifier;
+
+    // Skip if already processed
+    if (processedSimsSet[label]) {
+      Logger.log('Skipping already processed SIM: ' + label);
+      continue;
+    }
 
     // Check for cancellation
     if (PropertiesService.getScriptProperties().getProperty('CANCEL_SIM_JOB') === 'true') {
       Logger.log('⏹ Execution cancelled by user');
       PropertiesService.getScriptProperties().deleteProperty('CANCEL_SIM_JOB');
+      PropertiesService.getScriptProperties().deleteProperty('PREVIOUS_DAY_PROGRESS_' + usageType.toUpperCase());
       return;
     }
 
-    var identifier = sim.msisdn || sim.iccid || sim.imsi;
+    // Check if rate limit was hit
+    if (PropertiesService.getScriptProperties().getProperty('RATE_LIMIT_HIT') === 'true') {
+      Logger.log('🚫 Rate limit hit. Exiting early');
+      return;
+    }
+
     var paramName = sim.msisdn ? 'msisdn' : (sim.iccid ? 'iccid' : 'imsi');
-    var label = identifier;
 
     // Build endpoint
     var endpoint = '/usage-details?' +
@@ -373,15 +438,46 @@ function fetchPreviousDayUsage(usageType) {
 
     var colIdx = simColumnMap[label];
     if (colIdx) {
-      row[colIdx - 1] = usageValue;
+      // Write directly to the cell
+      sheet.getRange(targetRow, colIdx).setValue(usageValue);
+      simsProcessed++;
+
+      // Mark as processed
+      processedSimsSet[label] = true;
+
+      // Save progress after each SIM
+      PropertiesService.getScriptProperties().setProperty(
+        'PREVIOUS_DAY_PROGRESS_' + usageType.toUpperCase(),
+        JSON.stringify({
+          date: dateStr,
+          rowIndex: targetRow,
+          processedSims: processedSimsSet
+        })
+      );
+
+      if (simsProcessed % 10 === 0) {
+        Logger.log('Progress: ' + simsProcessed + '/' + sims.length + ' SIMs processed');
+      }
+    }
+
+    // Check execution time after each SIM
+    var elapsed = new Date().getTime() - START_TIME;
+    if (elapsed > MAX_DURATION_MS) {
+      Logger.log('⏰ Approaching execution time limit. Scheduling continuation...');
+      Logger.log('Processed ' + simsProcessed + ' SIMs. Remaining: ' + (sims.length - Object.keys(processedSimsSet).length));
+
+      var functionName = usageType === 'airtime' ? 'fetchPreviousDayAirtime' : 'fetchPreviousDayData';
+      scheduleNextHistoricalRun(functionName, 10);
+      return;
     }
   }
 
-  sheet.appendRow(row);
-  Logger.log('✅ Appended ' + usageType + ' usage for ' + dateStr);
+  // Cleanup - all SIMs processed
+  PropertiesService.getScriptProperties().deleteProperty('PREVIOUS_DAY_PROGRESS_' + usageType.toUpperCase());
+  Logger.log('✅ Completed processing all ' + sims.length + ' SIMs for ' + dateStr);
 
   SpreadsheetApp.getActiveSpreadsheet().toast(
-    'Previous day ' + usageType + ' usage fetched successfully',
+    'Previous day ' + usageType + ' usage fetched successfully (' + sims.length + ' SIMs)',
     '✅ Done',
     5
   );
