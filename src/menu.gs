@@ -12,49 +12,42 @@
  */
 function onOpen() {
   var ui = SpreadsheetApp.getUi();
-  var config = Config.get();
-
-  // Create main menu
   var menu = ui.createMenu('SimControl Integration');
-
-  // Track if any integration is enabled
   var hasAnyIntegration = false;
 
-  // Airtime Usage submenu
-  if (config.integrations.airtime && config.integrations.airtime.enabled) {
-    buildAirtimeMenu(menu);
-    hasAnyIntegration = true;
+  try {
+    var config = Config.get();
+
+    if (config.integrations.airtime && config.integrations.airtime.enabled) {
+      buildAirtimeMenu(menu);
+      hasAnyIntegration = true;
+    }
+
+    if (config.integrations.data && config.integrations.data.enabled) {
+      buildDataMenu(menu, config);
+      hasAnyIntegration = true;
+    }
+
+    if (hasAnyIntegration) {
+      buildSIMMenu(menu, config);
+    }
+
+    if (config.integrations.fotaweb && config.integrations.fotaweb.enabled) {
+      buildFotaMenu(menu);
+      hasAnyIntegration = true;
+    }
+
+    if (config.integrations.qrcode && config.integrations.qrcode.enabled) {
+      buildQRMenu(menu);
+      hasAnyIntegration = true;
+    }
+  } catch (e) {
+    // Config not yet set up — menu still appears with utilities only
   }
 
-  // Data Usage submenu
-  if (config.integrations.data && config.integrations.data.enabled) {
-    buildDataMenu(menu, config);
-    hasAnyIntegration = true;
-  }
+  // Always add utilities so menu is never empty
+  buildUtilsMenu(menu, hasAnyIntegration);
 
-  // SIM Management submenu (always shown if at least one integration is enabled)
-  if (hasAnyIntegration) {
-    buildSIMMenu(menu, config);
-  }
-
-  // FOTA Web submenu
-  if (config.integrations.fotaweb && config.integrations.fotaweb.enabled) {
-    buildFotaMenu(menu);
-    hasAnyIntegration = true;
-  }
-
-  // QR Codes submenu
-  if (config.integrations.qrcode && config.integrations.qrcode.enabled) {
-    buildQRMenu(menu);
-    hasAnyIntegration = true;
-  }
-
-  // Utilities submenu (always shown if any integration is enabled)
-  if (hasAnyIntegration) {
-    buildUtilsMenu(menu);
-  }
-
-  // Add menu to UI
   menu.addToUi();
 }
 
@@ -178,8 +171,10 @@ function buildQRMenu(menu) {
 /**
  * Build Utilities submenu
  */
-function buildUtilsMenu(menu) {
-  menu.addSeparator();
+function buildUtilsMenu(menu, addSeparator) {
+  if (addSeparator) {
+    menu.addSeparator();
+  }
 
   var submenu = SpreadsheetApp.getUi().createMenu('🔧 Utilities');
 

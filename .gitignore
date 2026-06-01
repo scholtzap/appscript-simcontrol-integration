@@ -1,1 +1,7 @@
 secrets/
+.clasprc.json
+.clasprc
+.env
+.env.*
+node_modules/
+.memory/*.sqlite
