@@ -11,25 +11,24 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
 
       - name: Install clasp
-        run: npm install -g @google/clasp
+        run: npm install -g @google/clasp@2.4.2
 
       - name: Set up authentication
         run: |
-          # Decode credentials (nested tokens.default structure from clasp login)
           echo "${{ secrets.CLASPRC_WIFI_GATEWAYS_PROVISIONING }}" | base64 --decode > ~/.clasprc.json
           chmod 600 ~/.clasprc.json
 
       - name: Deploy to WiFi Gateways Provisioning (Google Apps Script)
         working-directory: deployments/wifi-gateway
-        run: |
-          clasp push --force
+        run: clasp push --force

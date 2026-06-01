@@ -1,11 +1,15 @@
 {
-  "tokens": {
-    "default": {
-      "client_id": "1072944905499-vm2v2i5dvn0a0d2o4ca36i1vge8cvbn0.apps.googleusercontent.com",
-      "client_secret": "YOUR_CLIENT_SECRET_HERE",
-      "type": "authorized_user",
-      "refresh_token": "YOUR_REFRESH_TOKEN_HERE",
-      "access_token": "YOUR_ACCESS_TOKEN_HERE"
-    }
-  }
+  "token": {
+    "access_token": "YOUR_ACCESS_TOKEN_HERE",
+    "refresh_token": "YOUR_REFRESH_TOKEN_HERE",
+    "scope": "https://www.googleapis.com/auth/script.projects https://www.googleapis.com/auth/script.webapp.deploy https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/service.management https://www.googleapis.com/auth/logging.read https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile openid",
+    "token_type": "Bearer",
+    "expiry_date": 1234567890000
+  },
+  "oauth2ClientSettings": {
+    "clientId": "1072944905499-vm2v2i5dvn0a0d2o4ca36i1vge8cvbn0.apps.googleusercontent.com",
+    "clientSecret": "YOUR_CLIENT_SECRET_HERE",
+    "redirectUri": "http://localhost"
+  },
+  "isLocalCreds": false
 }
